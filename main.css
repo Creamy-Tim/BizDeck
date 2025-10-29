@@ -1,0 +1,67 @@
+.slogan {
+    font-family: 'Nagoda';
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    color: #141414;
+    position: relative;
+    top: 45px;
+    left: 16px;
+}
+
+.my_card_case {
+    width: 360px;
+    height: 320px;
+    /* 그라데이션 */
+    background: radial-gradient(at 30% 20%, #f7f7f7, transparent 60%),
+                radial-gradient(at 90% 40%, #e3e6f9, transparent 60%),
+                radial-gradient(at 70% 90%, #d5d9f9, #d6daf9);
+    border-radius: 16px;
+    position: relative;
+    top: 24px;
+    /* 가운데 정렬 */
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.my_card_case_header {
+    width: 342px;
+    height: 20px;
+    position: relative;
+    top: 16px;
+    /* 가운데 정렬 */
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+}
+
+.my_card_edit {
+    width: 56px;
+    height: 32px;
+    background-color: #ffffff;
+    border: 1px solid #141414;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.Edit_text {
+    font-family: 'SpartanMB';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    color: #141414;
+    margin: 0px;
+}
+
+.my_card_switch {
+    width: 80px;
+    height: 32px;
+    background-color: #ffffff;
+    border: 1px solid #141414;
+    border-radius: 16px;
+    position: absolute;
+    right: 0px;
+}
