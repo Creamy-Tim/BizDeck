@@ -48,7 +48,6 @@
     align-items: center;
 }
 
-
 .Edit_text {
     font-family: 'SpartanMB';
     font-size: 12px;
@@ -68,6 +67,32 @@
     right: 0px;
 }
 
+.card_list_head {
+    height: 40px;
+    position: relative;
+    top: 60px;
+    display: flex;  /* 가로로 배열 */
+    align-items: center; /* 세로 가운데정렬 */
+}
+
+.card_list_title {
+    font-family: 'SpartanMB';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    margin: 0px;
+    margin-left: 16px;
+}
+
+.card_list {
+    width: 360px;
+    height: auto;
+    position: relative;
+    top: 24px;
+    /* 가운데 정렬 */
+    left: 50%;
+    transform: translate(-50%);
+}
 
 /* 다른 css 속성은 component.css */
 .choice {
