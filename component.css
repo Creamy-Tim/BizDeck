@@ -30,8 +30,7 @@
     border: 1px solid #000000;
     border-radius: 10px;
     position: relative;
-    left: 50%;
-    transform: translate(-50%);
+    margin: 0 auto; /* 가로 가운데 배치 */
 
     overflow-y: scroll; /* 세로 스크롤 */
     /* 사이트별 스크롤바 숨기기 */
