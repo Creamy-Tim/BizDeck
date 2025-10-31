@@ -16,6 +16,7 @@
     background: radial-gradient(at 30% 20%, #f7f7f7, transparent 60%),
                 radial-gradient(at 90% 40%, #e3e6f9, transparent 60%),
                 radial-gradient(at 70% 90%, #d5d9f9, #d6daf9);
+
     border-radius: 16px;
     position: relative;
     top: 24px;
@@ -32,6 +33,7 @@
     /* 가운데 정렬 */
     left: 50%;
     transform: translate(-50%);
+    
     display: flex;
 }
 
@@ -64,4 +66,22 @@
     border-radius: 16px;
     position: absolute;
     right: 0px;
+}
+
+
+/* 다른 css 속성은 component.css */
+.choice {
+    left: 48px;
+}
+
+.home_button {
+    left: 64px;
+}
+
+.card_list_button {
+    left: 176px;
+}
+
+.setting_button {
+    left: 243px;
 }

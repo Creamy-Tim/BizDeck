@@ -30,10 +30,12 @@
     border: 1px solid #000000;
     border-radius: 10px;
     position: relative;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 
-/* [페이지이름       알림] 이런거 */
+/* [페이지이름       알림] 이부분 */
 .header {
     position: relative;
     height: 40px;
@@ -64,10 +66,45 @@
     width: 328px;
     height: 64px;
     background-color: rgba(20, 20, 20, 0.35);
+    backdrop-filter: blur(2px); /* 이 요소 뒷 배경 블러처리 */
     border-radius: 32px;
+    display: flex;
+    align-items: center; /* 세로 가운데정렬 */
     position: absolute;
     bottom: 112px;
     /* 가운데 정렬 */
     left: 50%;
     transform: translate(-50%);
+    z-index: 10; /* 배치를 앞으로 하는 정도(ex. PPT에서 맨앞으로 보내기) */
+}
+
+.choice {
+    width: 108px;
+    height: 48px;
+    background-color: #ffffff;
+    border-radius: 24px;
+    display: flex;
+    align-items: center; /* 세로 가운데정렬 */
+    position: absolute;
+    /* left 옵션은 페이지별 css 파일에 입력 */
+    z-index: 20; /* 배치를 앞으로 하는 정도) */
+}
+
+.home_button, .card_list_button, .setting_button{
+    width: auto;
+    height: 24px;
+    position: absolute;
+    /* left 옵션은 페이지별 css 파일에 입력 */
+    z-index: 30; /* 배치를 앞으로 하는 정도 */
+}
+
+.fotter_text {
+    font-family: 'SpartanMB';
+    font-size: 16px;
+    font-style: normal;
+    color: #5900FF;
+    font-weight: 600;
+    margin: 0px;
+    position: absolute;
+    right: 14px;
 }
