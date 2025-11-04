@@ -1,0 +1,59 @@
+.my_card_case {
+    width: 360px;
+    height: 252px;
+    /* 그라데이션 */
+    background: radial-gradient(at 30% 20%, #f7f7f7, transparent 60%),
+                radial-gradient(at 90% 40%, #e3e6f9, transparent 60%),
+                radial-gradient(at 70% 90%, #d5d9f9, #d6daf9);
+
+    border-radius: 16px;
+    margin: 24px auto 0;
+}
+
+.card_list_title {
+    height: 24px;
+    margin: 32px 0 0 16px;
+    font-family: 'SpartanMB';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.ui_case, .text_case, .color_case {
+    width: 360px;
+    border-radius: 16px;
+    background: rgba(217, 217, 217, 0.20);
+    margin: 8px auto 0;
+}
+
+.ui_case {
+    height: 116px;
+}
+
+.text_case {
+    height: 209px
+}
+
+.color_case {
+    height: 118px;
+}
+
+
+
+
+/* 다른 css 속성은 component.css */
+.choice {
+    left: 166px;
+}
+
+.home_button {
+    left: 55px;
+}
+
+.card_list_button {
+    left: 110px;
+}
+
+.setting_button {
+    left: 179px;
+}
