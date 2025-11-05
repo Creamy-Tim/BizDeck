@@ -120,6 +120,7 @@
     position: absolute;
     /* left 옵션은 페이지별 css 파일에 입력 */
     z-index: 30; /* 배치를 앞으로 하는 정도 */
+    cursor: pointer;
 }
 
 /* 하단바 중 선택시 나오는 텍스트 (ex. Home) */
