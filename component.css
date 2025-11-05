@@ -2,21 +2,22 @@
 
 @font-face {
   font-family: 'SpartanMB';
-  src: url('../assets/fonts/SpartanMB-SemiBold.otf') format('opentype');
+  src: url('./assets/fonts/SpartanMB-SemiBold.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
 }
 
+
 @font-face {
   font-family: 'SpartanMB';
-  src: url('../assets/fonts/SpartanMB-Bold.otf') format('opentype');
+  src: url('./assets/fonts/SpartanMB-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Nagoda';
-  src: url('../assets/fonts/Nagoda.otf') format('opentype');
+  src: url('./assets/fonts/Nagoda.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
 }
