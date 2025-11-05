@@ -44,6 +44,7 @@
 /* 다른 css 속성은 component.css */
 .choice {
     left: 166px;
+    width: 119px;
 }
 
 .home_button {

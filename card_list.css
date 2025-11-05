@@ -1,0 +1,33 @@
+.card_list_title {
+    height: 40px;
+    margin: 60px 0 0 16px;
+    font-family: 'SpartanMB';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.card_list {
+    width: 360px;
+    height: auto;
+    margin: 24px auto 0;
+
+}
+
+/* 다른 css 속성은 component.css */
+.choice {
+    left: 96px;
+    width: 136px;
+}
+
+.home_button {
+    left: 56px;
+}
+
+.card_list_button {
+    left: 111px;
+}
+
+.setting_button {
+    left: 248px;
+}
