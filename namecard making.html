@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Customizing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="phone">
+    <!-- Header -->
+    <header class="topbar">
+      <h1 class="title">Customizing</h1>
+      <button class="back" type="button">Back</button>
+    </header>
+
+    <section class="content">
+      <!-- Preview card (명함 미리보기) -->
+      <div class="preview-wrap">
+        <div class="card dark">
+          <div class="grid left">
+            <div class="placeholder"></div>
+            <div class="placeholder"></div>
+          </div>
+
+          <div class="right">
+            <div class="placeholder tall"></div>
+          </div>
+
+          <div class="icon-col">
+            <span class="icon"></span>
+            <span class="icon"></span>
+            <span class="icon"></span>
+          </div>
+
+          <div class="grid labels">
+            <div class="placeholder"></div>
+            <div class="placeholder"></div>
+            <div class="placeholder short"></div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Tools</h2>
+
+      <!-- Layout 선택 -->
+      <section class="panel">
+        <div class="sub">Layout</div>
+        <div class="layout-list">
+          <label class="layout">
+            <input type="radio" name="layout" checked />
+            <svg viewBox="0 0 160 68" aria-hidden="true">
+              <rect x="10" y="10" rx="10" ry="10" width="60" height="22" />
+              <rect x="10" y="40" rx="10" ry="10" width="60" height="18" />
+              <rect x="90" y="26" rx="10" ry="10" width="60" height="28" />
+            </svg>
+            <span class="kbd">A</span>
+          </label>
+
+          <label class="layout">
+            <input type="radio" name="layout" />
+            <svg viewBox="0 0 160 68" aria-hidden="true">
+              <rect x="10" y="12" rx="10" ry="10" width="60" height="18" />
+              <rect x="10" y="38" rx="10" ry="10" width="90" height="18" />
+              <rect x="110" y="38" rx="10" ry="10" width="40" height="18" />
+            </svg>
+            <span class="kbd">B</span>
+          </label>
+
+          <label class="layout">
+            <input type="radio" name="layout" />
+            <svg viewBox="0 0 160 68" aria-hidden="true">
+              <rect x="18" y="14" rx="10" ry="10" width="124" height="14" />
+              <rect x="18" y="34" rx="10" ry="10" width="124" height="20" />
+            </svg>
+            <span class="kbd">C</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Font / Size -->
+      <section class="panel">
+        <div class="sub">Font</div>
+        <div class="row seg">
+          <button class="chip">Aa</button>
+          <button class="chip">AA</button>
+          <button class="chip active">Aa</button>
+          <button class="chip">Aa</button>
+          <button class="chip">Aa</button>
+        </div>
+
+        <div class="sub" style="margin-top:12px;">Size</div>
+        <div class="row seg">
+          <button class="chip active">12</button>
+          <button class="chip">16</button>
+          <button class="chip">18</button>
+          <button class="chip">24</button>
+          <button class="chip">32</button>
+        </div>
+      </section>
+
+      <!-- Color -->
+      <section class="panel">
+        <div class="sub">Color</div>
+        <div class="swatches">
+          <button class="sw black"></button>
+          <button class="sw red"></button>
+          <button class="sw indigo"></button>
+          <button class="sw teal"></button>
+          <button class="sw orange"></button>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
