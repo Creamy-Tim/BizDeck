@@ -10,10 +10,11 @@
 .my_card_case {
     width: 360px;
     height: 320px;
-    /* 그라데이션 */
+    /* 그라데이션 1 */
     background: radial-gradient(at 30% 20%, #f7f7f7, transparent 60%),
                 radial-gradient(at 90% 40%, #e3e6f9, transparent 60%),
                 radial-gradient(at 70% 90%, #d5d9f9, #d6daf9);
+                bottom: 10px;
 
     border-radius: 16px;
     margin: 24px auto 0;
