@@ -6,7 +6,13 @@
   border: 1px solid #000000;
   position: absolute;
   right: 15px;
-  cursor: pointer;
+}
+
+.back_button:hover {
+    font-weight: 600;
+    background-color:#000000;
+    color: #FFFFFF;
+    cursor:pointer;
 }
 
 .my_card_case {
