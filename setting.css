@@ -21,8 +21,6 @@ body {
 /* 헤더 */
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid #eee;
 }
 
@@ -34,6 +32,7 @@ body {
 .back_button {
   border: 2px solid #000;
   background: white;
+  margin-left: 160px;
   border-radius: 999px;
   padding: 6px 18px;
   font-weight: 700;
@@ -69,79 +68,88 @@ body {
     justify-content: center;
     align-items: center;
 }
-.Biz_card {
+
+.my_card {
   width: 343px;
   height: 220px;
-  flex-shrink: 0;
+  background-color: #000;
   border-radius: 16px;
-  background: var(--M-black, #141414);
-  align-items: center;
+  position: relative;
 }
 
-.block-column {
-  display: flex;
-  margin: 20px;
-  flex-direction: column;
-  gap: 10px;        /* 줄 사이 간격 */
-  width: 100%;
+.my_name, .my_job {
+    width: 137px;
+    height: 36px;
+
+    position: relative;
+    top: 25px;
+    left: 22px;
+    background-color: transparent;
+    border: 1px dashed #fff;
+    border-radius: 4px;
 }
 
-.block-column div {
-  width: 140px;
-  height: 35px;    /* 줄 높이 */
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.15);
+.my_job {
+    height: 27px;
+    margin-top: 6px;
 }
 
-.block {
-    background: rgba(255,255,255,0.15);
-    border-radius: 8px;
-}
-
-.block-column .phone_num_block,
-.block-column .email_block,
-.block-column .portfolio_block {
-
-  width: 130px;
-  height: 25px;
-  margin-left: 50px;
-}
-
-.block.small { width: 60px; height: 25px; }
-.block.medium { width: 140px; height: 25px; }
-.block.large { width: 240px; height: 25px; }
-
-.my_card_case p {
-  margin: 4px 0;
-}
-
-.name {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.position {
-  font-size: 16px;
-  color: #555;
+.contact_case {
+  width: 142px;
+  height: 70px;
+  margin-top: 46px;
+  margin-left: 24px;
 }
 
 .contact {
-  font-size: 14px;
-  color: #777;
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-bottom: 2px;
+}
+
+svg path {
+  fill: #fff;
+}
+
+.contact_text {
+  width: 110px;
+  height: 22px;
+  border: 1px dashed #fff;
+  border-radius: 4px;
+  margin: 0;
+  margin-left: 6px;
+
+  color: #fff;
+  font-family: "Spartan MB";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.logo {
+  width: 112px;
+  height: 51px;
+  border: 1px dashed #fff;
+  border-radius: 4px;
+  position: absolute;
+  right: 22px;
+  bottom: 27px;
 }
 
 /* 섹션 공통 제목 */
 .card_list_title{
   font-size: 16px;
   font-weight: 600;
-  margin: 8px 10px;
+  margin: 25px 0 8px 20px;
   font-family: 'SpartanMB';
 }
 
 .section_title {
   font-size: 16px;
   font-weight: 600;
-  margin: 8px 0;
+  margin: 8px 10px;
   font-family: 'SpartanMB';
 }
 
@@ -200,13 +208,13 @@ body {
 
 .text_style {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     padding: 10px 10px 18px 10px;
 }
 
 .style-btn {
-    width: 48px;
-    height: 48px;
+    width: 55px;
+    height: 55px;
     border-radius: 10px;
     border: 1px solid #ddd;
     background: #fff;
@@ -219,61 +227,105 @@ body {
     border: 2px solid #000;
 }
 
+.lower{
+  color: #959595;
+  font-family: "Spartan MB";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.upper{
+color: #959595;
+font-family: "Spartan MB";
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.bold{
+  color: #959595;
+  font-family: "Spartan MB";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.underline{
+  color: #959595;
+  font-family: "Spartan MB";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+.italic{
+  color: #959595;
+  font-family: "Arimo Hebrew Subset Italic";
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .font_section {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin: 12px 0;
 }
 
 .font_section label {
-    font-size: 16px;
+  font-size: 16px;
+  margin: 8px 12px;
 }
 
 .font_select {
-    width: 120px;
-    padding: 6px 8px;
+  margin-left: 23px;
+  width: 120px;
+  padding: 6px 8px;
 }
 
-/* 폰트 스타일 옵션 */
-#font_select option[value="regular"] {
-  font-style: normal;
-  font-weight: 400;
-}
-#font_select option[value="bold"] {
-  font-weight: 700;
-}
-#font_select option[value="italic"] {
-  font-style: italic;
-}
-#font_select option[value="bolditalic"] {
-  font-weight: 700;
-  font-style: italic;
+.size_section label{
+  flex: 1;
+  margin-left: 2px;
+  margin-top: 17px;
 }
 
-.size_section p {
-  margin-bottom: 6px;
+.size_section {
+  padding: 10px;
+  display: flex;
 }
 
 .size_buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 4px;
+  gap: 3.5px;
+  border-radius: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.2s; 
 }
 
 .size_buttons button {
-  flex: 1;
+  width: 48px;
+  height: 48px;
   border: none;
   background: white;
-  border-radius: 6px;
-  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .size_buttons button.active {
-  background: #d9ff00;
-  font-weight: 600;
+  border: 2px solid #000;
 }
 
 /* Color 섹션 */
@@ -282,9 +334,10 @@ body {
 }
 
 .color_row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  margin: 13px;
+  flex-wrap: wrap;
 }
 
 .color_title {
@@ -292,14 +345,17 @@ body {
 }
 
 .color_group {
-    display: flex;
-    gap: 6px;
+  width: 247px;
+  display: flex;
+  gap: 11.75px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
 }
 
 .color_block {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
