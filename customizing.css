@@ -1,0 +1,227 @@
+\.my_card_case {
+    width: 360px;
+    height: 252px;
+    /* 그라데이션 */
+    background: radial-gradient(at 30% 20%, #f7f7f7, transparent 60%),
+                radial-gradient(at 90% 40%, #e3e6f9, transparent 60%),
+                radial-gradient(at 70% 90%, #d5d9f9, #d6daf9);
+
+    border-radius: 16px;
+    margin: 24px auto 0;
+}
+
+.card_list_title {
+    height: 24px;
+    margin: 32px 0 0 16px;
+    font-family: 'SpartanMB';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.ui_case, .text_case, .color_case {
+    width: 360px;
+    border-radius: 16px;
+    background: rgba(217, 217, 217, 0.20);
+    margin: 8px auto 0;
+}
+
+.ui_case {
+    height: 116px;
+    display: flex;
+    align-items: center;
+    
+}
+
+.text_case {
+    height: 209px;
+    display: flex;   
+    
+}
+
+.color_case {
+    height: 118px;
+}
+
+
+
+
+/* 다른 css 속성은 component.css */
+.choice {
+    left: 166px;
+    width: 119px;
+}
+
+.home_button {
+    left: 55px;
+}
+
+.card_list_button {
+    left: 110px;
+}
+
+.setting_button {
+    left: 179px;
+}
+
+.back_button {
+  
+  font-family: SpartanMB-Medium;
+    display: flex;
+    width: 56px;
+    height: 32px;
+    padding: 6px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    border: 1px solid var(--M-black, #141414);
+    background: #FFF;
+    position: absolute;
+    right: 15px;
+}
+
+.back_button:hover {
+    font-weight: 600;
+    background-color:#000000;
+    color: #FFFFFF;
+    cursor:pointer;
+}
+
+.namecard_making{
+  width: 120px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background-color:#FFFFFF;;
+  border-color: #141414;
+  border: 1px solid var(--M-black, #141414);
+  margin-left: 8px;
+  position: relative;
+}
+
+.elements1{
+  width: 57.5px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 10.006px;
+  border: 1.251px solid #959595;
+  background: #616161;
+  margin-top: 8px;
+  margin-left: 4px;
+}
+
+.elements2{
+  width: 57.5px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 10.006px;
+  border: 1.251px solid #959595;
+  background: #616161;
+  margin-top: 8px;
+  margin-left: 4px;
+}
+
+.elements2{
+  width: 57.5px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 10.006px;
+  border: 1.251px solid #959595;
+  background: #616161;
+  margin-top: 8px;
+  margin-left: 4px;
+}
+
+.elements3{
+ width: 30px;
+ height: 25px;
+ flex-shrink: 0;
+ border-radius: 10.006px;
+ border: 1.251px solid #959595;
+ background: #616161;
+ position: absolute;
+ bottom: 8px;
+ right: 10px;
+}
+
+.text_style{
+display: flex;
+width: 24px;
+height: 24px;
+padding: 10px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+
+border-radius: 4px;
+border: 1px solid #D9D9D9;
+background: #FFF;
+margin-left: 8px;
+position: relative;
+
+margin-right: 20px;
+margin-top: 12px;
+
+}
+
+.text_title1{
+color: #959595;
+font-family: "Spartan MB";
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.text_title2{
+color: #959595;
+font-family: "Spartan MB";
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.text_title3{
+color: #959595;
+font-family: "Spartan MB";
+font-size: 20px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.text_title4{
+color: #959595;
+font-family: "Spartan MB";
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+text-decoration-line: underline;
+text-decoration-style: solid;
+text-decoration-skip-ink: auto;
+text-decoration-thickness: auto;
+text-underline-offset: auto;
+text-underline-position: from-font;
+}
+
+.text_title5{
+color: #959595;
+font-family: "Arimo Hebrew Subset Italic";
+font-size: 20px;
+font-style: italic;
+font-weight: 400;
+line-height: normal;
+}
+
+.Font{
+color: #959595;
+font-family: "Spartan MB";
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
