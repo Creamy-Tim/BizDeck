@@ -43,6 +43,75 @@
 
 .ui_case {
     height: 116px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    overflow-x: auto;     /* 가로 스크롤 */
+    overflow-y: hidden;   /* 세로 스크롤 방지 */
+    -ms-overflow-style: none;  /* IE, Edge */
+    scrollbar-width: none;      /* Firefox */
+}
+
+.ui_case::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+.namecard_making{
+    width: 120px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background-color:#FFFFFF;;
+    border-color: #141414;
+    border: 1px solid #141414;
+    margin-left: 8px;
+    position: relative;
+}
+
+.elements1{
+    width: 57.5px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1.251px solid #959595;
+    background: #616161;
+    margin-top: 8px;
+    margin-left: 4px;
+}
+
+.elements2{
+    width: 57.5px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #959595;
+    background: #616161;
+    margin-top: 8px;
+    margin-left: 4px;
+  }
+
+.elements2{
+    width: 57.5px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10.006px;
+    border: 1.251px solid #959595;
+    background: #616161;
+    margin-top: 8px;
+    margin-left: 4px;
+}
+
+.elements3{
+    width: 30px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10.006px;
+    border: 1.251px solid #959595;
+    background: #616161;
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
 }
 
 .text_case {
