@@ -16,17 +16,15 @@
                 radial-gradient(at 70% 90%, #d5d9f9, #d6daf9);
     border-radius: 16px;
     margin: 24px auto 0;
+    display: grid;
+    justify-content: center;
 }
 
 .my_card_case_header {
     width: 342px;
     height: 20px;
     position: relative;
-    top: 16px;
-    /* 가운데 정렬 */
-    left: 50%;
-    transform: translate(-50%);
-    
+    top: 16px;    
     display: flex;
 }
 
@@ -58,6 +56,23 @@
     border-radius: 16px;
     position: absolute;
     right: 0px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.card_qr_switch {
+    width: 40px;
+    height: 24px;
+    background: #000000;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card_qr_switch.qr {
+    margin-left: 40px;
 }
 
 .card_list_title {
