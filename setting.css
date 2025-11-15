@@ -74,7 +74,7 @@
     height: 25px;
     flex-shrink: 0;
     border-radius: 10px;
-    border: 1.251px solid #959595;
+    border: 1px solid #959595;
     background: #616161;
     margin-top: 8px;
     margin-left: 4px;
@@ -95,8 +95,8 @@
     width: 57.5px;
     height: 25px;
     flex-shrink: 0;
-    border-radius: 10.006px;
-    border: 1.251px solid #959595;
+    border-radius: 10px;
+    border: 1px solid #959595;
     background: #616161;
     margin-top: 8px;
     margin-left: 4px;
@@ -106,7 +106,7 @@
     width: 30px;
     height: 25px;
     flex-shrink: 0;
-    border-radius: 10.006px;
+    border-radius: 10px;
     border: 1.251px solid #959595;
     background: #616161;
     position: absolute;
