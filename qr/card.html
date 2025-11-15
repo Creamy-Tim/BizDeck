@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>명함 보기</title>
+
+    <!-- 분리된 CSS -->
+    <link rel="stylesheet" href="card.css">
+</head>
+<body>
+<div class="page">
+    <!-- 명함이 표시될 영역 -->
+    <div id="cardContainer"></div>
+
+    <!-- 아래 버튼 영역 -->
+    <div class="actions" id="actions" style="display:none;">
+        <button class="btn primary" id="btnDownloadQr">QR 다운로드</button>
+        <button class="btn" id="btnSaveToApp">앱에 등록</button>
+        <button class="btn" id="btnDownloadApp">앱 다운로드</button>
+        <p class="helper-text">※ 앱에 등록 / 앱 다운로드는 나중에 연동 예정입니다.</p>
+    </div>
+</div>
+
+<!-- QRCode.js: QR 다운로드용 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+    // 1️⃣ 테스트용 명함 데이터 (아이디별로 명함 정보)
+    const cards = {
+        "choan1130": {
+            name: "조안정",
+            job: "소프트웨어학부 24학번",
+            phone: "010-1234-5678",
+            email: "joanjeong@example.com",
+            company: "Someday",
+            website: "https://example.com"
+        },
+        "USER_987654": {
+            name: "홍길동",
+            job: "백엔드 개발자",
+            phone: "010-9999-8888",
+            email: "hong@example.com",
+            company: "Dev Team",
+            website: "https://dev.example.com"
+        }
+        // 👉 여기 계속 추가하면 됨
+    };
+
+    // 2️⃣ URL에서 id 쿼리 읽기
+    const params = new URLSearchParams(window.location.search);
+    let id = params.get("id");  // ← 수정됨! (const → let)
+
+    if (!id) id = "choan1130";  // 기본 아이디
+
+    const cardContainer = document.getElementById("cardContainer");
+    const actions = document.getElementById("actions");
+
+    if (!id || !cards[id]) {
+        cardContainer.innerHTML = `
+            <div class="error">
+                이 명함을 찾을 수 없습니다.<br>
+                (id: ${id ? id : "없음"})
+            </div>
+        `;
+    } else {
+        // 3️⃣ 명함 정보를 HTML로 렌더링
+        const data = cards[id];
+        cardContainer.innerHTML = `
+            <div class="card">
+                <div class="name">${data.name}</div>
+                <div class="job">${data.job}</div>
+                <div class="info-line"><span class="label">소속</span> ${data.company || "-"}</div>
+                <div class="info-line"><span class="label">전화</span> ${data.phone || "-"}</div>
+                <div class="info-line"><span class="label">이메일</span> ${data.email || "-"}</div>
+                <div class="info-line"><span class="label">웹</span> ${data.website || "-"}</div>
+            </div>
+        `;
+        actions.style.display = "flex";
+    }
+
+    // 4️⃣ QR 다운로드: 현재 페이지 주소로 QR 만들어서 png 다운로드
+    const btnDownloadQr = document.getElementById("btnDownloadQr");
+    const btnSaveToApp = document.getElementById("btnSaveToApp");
+    const btnDownloadApp = document.getElementById("btnDownloadApp");
+
+    if (btnDownloadQr) {
+        btnDownloadQr.addEventListener("click", function () {
+            const temp = document.createElement("div");
+            temp.style.position = "fixed";
+            temp.style.left = "-9999px";
+            document.body.appendChild(temp);
+
+            const qr = new QRCode(temp, {
+                text: window.location.href,
+                width: 512,
+                height: 512
+            });
+
+            setTimeout(function () {
+                const img = temp.querySelector("img") || temp.querySelector("canvas");
+                if (!img) {
+                    alert("QR 생성에 실패했습니다.");
+                    document.body.removeChild(temp);
+                    return;
+                }
+
+                let dataUrl;
+                if (img.tagName.toLowerCase() === "img") {
+                    dataUrl = img.src;
+                } else {
+                    dataUrl = img.toDataURL("image/png");
+                }
+
+                const link = document.createElement("a");
+                link.href = dataUrl;
+                link.download = "my_card_qr.png";
+                link.click();
+
+                document.body.removeChild(temp);
+            }, 300);
+        });
+    }
+
+    // 5️⃣ 앱에 등록 / 앱 다운로드 (현재는 안내만)
+    if (btnSaveToApp) {
+        btnSaveToApp.addEventListener("click", function () {
+            alert("앱 연동은 추후에 추가될 예정입니다.");
+        });
+    }
+
+    if (btnDownloadApp) {
+        btnDownloadApp.addEventListener("click", function () {
+            alert("앱 다운로드 링크는 추후에 연결될 예정입니다.");
+        });
+    }
+</script>
+</body>
+</html>
