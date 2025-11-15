@@ -1,3 +1,14 @@
+.back_button {
+  width: 56px;
+  height: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #000000;
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+}
+
 .my_card_case {
     width: 360px;
     height: 252px;
@@ -104,11 +115,114 @@ svg path {
 }
 
 .text_case {
-    height: 209px
+    height: 209px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
+.style_case, .font_case, .size_case {
+  width: 344px;
+  height: 48px;
+  position: relative;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  z-index: 20;
+}
+
+.style_box, .size_box {
+  width: 48px;
+  height: 48px;
+  background: #ffffff;
+  border: 1px solid #D9D9D9;
+  border-radius: 4px;
+  margin-right: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.style_text, .size_text {
+  color: #959595;
+  font-family: "Spartan MB";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* 위에 추가 스타일 있음 */
+.font_case {
+  height: 19px;
+  margin-top: 32px;
+}
+
+.tools_text {
+  color: #959595;
+  font-family: "Spartan MB";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0;
+  margin-right: 36px;
+}
+
+/* 위에 추가 스타일 있음 */
+.size_case {
+  margin-top: 30px;
+}
+
+.size_box {
+  margin-right: 8px;
+}
+
+.size_text {
+  font-size: 16px;
+}
+
+/* 위에 추가 스타일 있음 */
 .color_case {
     height: 118px;
+    display: flex;
+}
+
+.palette_case {
+  width: 162px;
+  height: 90px;
+  position: relative;
+  top: 12px;
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+.palette {
+  width: 166px;
+  height: 66px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);  /* 5개씩 배치 */
+}
+
+.palette_color {
+  width: 29px;
+  height: 29px;
+  border-radius: 4px;
+  position: relative;
+  margin: 0 4px 4px 0;
+}
+
+.save_button {
+  width: 56px;
+  height: 32px;
+  background: #D7F439;
+  border: none;
+  border-radius: 16px;
+  position: absolute;
+  margin-top: 23px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
