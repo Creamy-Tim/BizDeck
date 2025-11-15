@@ -40,20 +40,23 @@
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <button id="makeQR">QR 생성</button>
+<div class="wrap">
+    <button id="makeQR">QR 생성</button>
+    <div id="qrArea"></div>
+</div>
 
-        <div id="qrArea"></div>
-    </div>
+<!-- QRCode.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <!-- QRCode.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+    // ✅ 이 주소를 네 GitHub Pages의 card.html 실제 주소로 바꿔줘!
+    // 예: "https://ahnjung513.github.io/BizDeck/card.html"
+    const CARD_PAGE_URL = "https://creamy-tim.github.io/BizDeck/qr/card.html";
 
-    <script>
-    // 내 명함 페이지 기본 주소 (나중에 실제 주소로 바꾸면 됨)
-    const CARD_PAGE_URL = "https://example.com/card.html"; // 깃허브 페이지 주소 등
+    // 명함 주인 아이디
+    const userId = "choan1130";
 
-    const userId = "choan1130"; // 이 사람의 아이디
+    // QR 안에 들어갈 최종 URL (폰에서 이 주소가 열림)
     const qrText = CARD_PAGE_URL + "?id=" + encodeURIComponent(userId);
 
     const btn = document.getElementById('makeQR');
@@ -61,11 +64,14 @@
     let qr = null;
 
     btn.addEventListener('click', function () {
-        btn.style.display = 'none';   // 버튼 숨기기
+        // 버튼은 사라지고
+        btn.style.display = 'none';
+
+        // QR 생성
         if (!qr) {
             qrArea.style.display = 'block';
             qr = new QRCode(qrArea, {
-                text: qrText,        // 👉 이제 QR 안에는 명함 페이지 URL이 들어감
+                text: qrText,
                 width: 200,
                 height: 200,
             });

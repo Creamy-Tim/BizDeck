@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>명함 보기</title>
-
-    <!-- 분리된 CSS -->
     <link rel="stylesheet" href="card.css">
 </head>
 <body>
 <div class="page">
-    <!-- 명함이 표시될 영역 -->
+    <!-- 명함 영역 -->
     <div id="cardContainer"></div>
 
-    <!-- 아래 버튼 영역 -->
+    <!-- 버튼 영역 -->
     <div class="actions" id="actions" style="display:none;">
         <button class="btn primary" id="btnDownloadQr">QR 다운로드</button>
         <button class="btn" id="btnSaveToApp">앱에 등록</button>
@@ -25,7 +23,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
-    // 1️⃣ 테스트용 명함 데이터 (아이디별로 명함 정보)
+    // 1️⃣ 아이디별 명함 데이터
     const cards = {
         "choan1130": {
             name: "조안정",
@@ -43,14 +41,15 @@
             company: "Dev Team",
             website: "https://dev.example.com"
         }
-        // 👉 여기 계속 추가하면 됨
+        // 👉 필요하면 여기 계속 추가
     };
 
     // 2️⃣ URL에서 id 쿼리 읽기
     const params = new URLSearchParams(window.location.search);
-    let id = params.get("id");  // ← 수정됨! (const → let)
+    let id = params.get("id");          // ❗ let 이어야 함 (아까 문제났던 부분)
 
-    if (!id) id = "choan1130";  // 기본 아이디
+    // id 없을 때 기본값 (브라우저에서 card.html만 열었을 때)
+    if (!id) id = "choan1130";
 
     const cardContainer = document.getElementById("cardContainer");
     const actions = document.getElementById("actions");
@@ -63,7 +62,6 @@
             </div>
         `;
     } else {
-        // 3️⃣ 명함 정보를 HTML로 렌더링
         const data = cards[id];
         cardContainer.innerHTML = `
             <div class="card">
@@ -78,7 +76,7 @@
         actions.style.display = "flex";
     }
 
-    // 4️⃣ QR 다운로드: 현재 페이지 주소로 QR 만들어서 png 다운로드
+    // 4️⃣ QR 다운로드(현재 명함 페이지 URL 기준)
     const btnDownloadQr = document.getElementById("btnDownloadQr");
     const btnSaveToApp = document.getElementById("btnSaveToApp");
     const btnDownloadApp = document.getElementById("btnDownloadApp");
@@ -121,7 +119,7 @@
         });
     }
 
-    // 5️⃣ 앱에 등록 / 앱 다운로드 (현재는 안내만)
+    // 5️⃣ 나중에 연동할 버튼들 (지금은 안내만)
     if (btnSaveToApp) {
         btnSaveToApp.addEventListener("click", function () {
             alert("앱 연동은 추후에 추가될 예정입니다.");
