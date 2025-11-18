@@ -142,3 +142,17 @@
 .setting_button {
     left: 243px;
 }
+
+#qrArea {
+    margin-top: 24px;
+    width: 220px;
+    height: 220px;
+    display: none; /* 처음에는 숨김 */
+    margin: 0 auto;
+}
+
+#qrArea > img {
+    width: 100% !important;
+    height: 100% !important;
+    
+}
