@@ -36,16 +36,14 @@
             job: "소프트웨어학부 24학번",
             phone: "010-3652-9951",
             email: "ahnjung@yonsei.ac.kr",
-            company: "Someday",
             website: "https://example.com"
         },
-        "USER_987654": {
-            name: "홍길동",
-            job: "백엔드 개발자",
-            phone: "010-9999-8888",
-            email: "hong@example.com",
-            company: "Dev Team",
-            website: "https://dev.example.com"
+        "USER_000001": {
+            name: "SeoHee Yoon",
+            job: "Product Designer",
+            phone: "010-0000-0000",
+            email: "abcde@yonsei.ac.kr",
+            website: "www.abc.com"
         }
         // 👉 필요하면 여기 계속 추가
     };
@@ -55,7 +53,7 @@
     let id = params.get("id");          // ❗ let 이어야 함 (아까 문제났던 부분)
 
     // id 없을 때 기본값 (브라우저에서 card.html만 열었을 때)
-    if (!id) id = "choan1130";
+    if (!id) id = "USER_000001";
 
     const cardContainer = document.getElementById("my_card");
     const actions = document.getElementById("actions");
