@@ -21,7 +21,7 @@
                     <div class="my_card_edit" onclick="location.href='setting.html'">
                         <p class="Edit_text">Edit</p>
                     </div>
-                    <div class="my_card_switch" onclick="Switch()">
+                    <div class="my_card_switch" onclick="Switch()"> <!-- 카드큐알 스위치 -->
                         <div class="card_qr_switch">
                             <img src="./assets/img/card_button.svg" id="card">
                             <img src="./assets/img/qr_button.svg" id="qr" style="display: none;">
@@ -85,6 +85,10 @@
                         <img src="./assets/img/BizDeck_logo.svg" class="logo_img">
                     </div>
                 </div>
+
+                <!-- QR 영역 -->
+                <div id="qrArea"></div>
+
             </div>
             <p class="card_list_title">Recent watched</p>
             <div class="card_list">
@@ -106,7 +110,8 @@
         </section>
     </section>
     
-    
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <script>
         // card_qr_switch 버튼 누를 때 작동
@@ -115,6 +120,13 @@
             const card = document.getElementById('card');            // 명함 이미지
             const qr = document.getElementById('qr');                // QR코드 이미지
             const my_card = document.getElementById('my_card');
+            
+            // QR 부분
+            const CARD_PAGE_URL = "https://creamy-tim.github.io/BizDeck/qr/card.html";
+            const qrArea = document.getElementById('qrArea');        //QR 케이스
+            const userId = "choan1130"        //QR 아이디
+            const qrText = CARD_PAGE_URL + "?id=" + encodeURIComponent(userId);        //QR URL
+            let qr_image = null;
 
             // qr 상태 on/off
             btn.classList.toggle('qr');   // 활성화/비활성화 토글
@@ -124,12 +136,21 @@
                 card.style.display = 'none';
                 qr.style.display = 'block';
                 my_card.style.display = 'none';
+                
+                qrArea.innerHTML = '';
+
+                qrArea.style.display = 'block';
+                qr_image = new QRCode(qrArea, {
+                text: qrText,
+            });
             }
             // 명함
             else {
                 card.style.display = 'block';
                 qr.style.display = 'none';
                 my_card.style.display = 'block';
+
+                qrArea.style.display = 'none';
             }
         }
 
