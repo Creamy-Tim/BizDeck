@@ -14,11 +14,17 @@
             <p class="text">Turning Cards<br>into Connections.</p>
         </div>
 
-        <input type="text" class="login_input" placeholder="Email">
-        <input type="text" class="login_input" placeholder="Password">
-        <button class="login_button">SIGN IN</button>
+        <input type="email" class="login_input" id="email" placeholder="Email">
+        <input type="password" class="login_input" id="password" placeholder="Password">
+        <p id="status" class="status"></p>
+        <button class="login_button" id="loginBtn">LOGIN</button>
+        <button class="signin_button" id="signupBtn">SIGN IN</button>
         
-
     </div>
+
+    <!-- js 모듈 불러오기 -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <!-- js 연동 -->
+    <script type="module" src="login.js"></script>
 </body>
 </html>

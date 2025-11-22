@@ -35,7 +35,9 @@
 /* 애니메이션 전엔 안보였다가 로고 올라간 이후 등장 */
 .text_case,
 .login_input,
-.login_button {
+.login_button,
+.signin_button,
+.status {
     opacity: 0;
     transform: translateY(24px);
     animation: fadeInUp 0.8s ease-in forwards;
@@ -76,7 +78,11 @@
     line-height: 20px; /* 125% */
 }
 
-.login_button {
+.status {
+    margin: 8px 0 0 0;
+}
+
+.login_button, .signin_button {
     width: 344px;
     height: 56px;
     display: flex;
@@ -84,7 +90,7 @@
     justify-content: center;
     border-radius: 37px;
     background: #000;
-    margin-top: 140px;
+    margin-top: 120px;
 
     color: #FFF;
     font-family: "Spartan MB";
@@ -93,6 +99,10 @@
     font-weight: 600;
     line-height: 20px; /* 125% */
     text-transform: uppercase;
+}
+
+.signin_button {
+    margin-top: 12px;
 }
 
 /* 공통 페이드 인 + 위로 슬라이드 */
