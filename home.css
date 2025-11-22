@@ -14,20 +14,17 @@
     background: radial-gradient(at 30% 20%, #f7f7f7, transparent 60%),
                 radial-gradient(at 90% 40%, #e3e6f9, transparent 60%),
                 radial-gradient(at 70% 90%, #d5d9f9, #d6daf9);
-
     border-radius: 16px;
     margin: 24px auto 0;
+    display: grid;
+    justify-content: center;
 }
 
 .my_card_case_header {
     width: 342px;
     height: 20px;
     position: relative;
-    top: 16px;
-    /* 가운데 정렬 */
-    left: 50%;
-    transform: translate(-50%);
-    
+    top: 16px;    
     display: flex;
 }
 
@@ -40,6 +37,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .Edit_text {
@@ -57,6 +55,57 @@
     background-color: #ffffff;
     border: 1px solid #141414;
     border-radius: 16px;
+    position: absolute;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.card_qr_switch {
+    width: 40px;
+    height: 24px;
+    background: #000000;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: margin-left 0.3s ease; /* 부드럽게 이동 */
+}
+
+.card_qr_switch.qr {
+    margin-left: 40px;
+}
+
+.my_name, .my_job, .contact_text, .logo {
+    border-style: none;
+}
+
+.my_name_text, .my_job_text, .contact_text_text {
+    font-family: "Spartan MB";
+    font-style: normal;
+    color: #000000;
+    margin: 0;
+}
+
+.my_name_text {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.my_job_text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.contact_text_text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.logo_img {
+    width: auto;
+    height: 50px;
     position: absolute;
     right: 0px;
 }
@@ -92,4 +141,18 @@
 
 .setting_button {
     left: 243px;
+}
+
+#qrArea {
+    margin-top: 24px;
+    width: 220px;
+    height: 220px;
+    display: none; /* 처음에는 숨김 */
+    margin: 0 auto;
+}
+
+#qrArea > img {
+    width: 100% !important;
+    height: 100% !important;
+    
 }
