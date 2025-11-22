@@ -29,11 +29,14 @@ const DEFAULT_CARD = {
 };
 
 // DOM 요소
-const nameEl = document.querySelector(".name");
-const titleEl = document.querySelector(".title");
-const contactEl = document.querySelector(".contact");
-const emailEl = document.querySelector(".email");
-const websiteEl = document.querySelector(".website");
+// DOM 요소
+const nameEl = document.querySelector(".my_name_text");
+const titleEl = document.querySelector(".my_job_text");
+
+const contactTextNodes = document.querySelectorAll(".contact_text_text");
+const contactEl = contactTextNodes[0];  // 전화
+const emailEl   = contactTextNodes[1];  // 이메일
+const websiteEl = contactTextNodes[2];  // 웹사이트
 
 // 🔹 프로필 불러오기
 async function loadProfile(uid) {

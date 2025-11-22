@@ -30,10 +30,10 @@
                 </div>
                 <div class="my_card" id="my_card" style="margin-top: 16px;">
                     <div class="my_name">
-                        <p class="my_name_text">SeoHee Yoon</p>
+                        <p class="my_name_text">Name</p>
                     </div>
                     <div class="my_job">
-                        <p class="my_job_text">Product Designer</p>
+                        <p class="my_job_text">Job</p>
                     </div>
                     <div class="contact_case">
                         <div class="contact">
@@ -56,7 +56,7 @@
                                 </defs>
                             </svg>
                             <div class="contact_text">
-                                <p class="contact_text_text">abcde@yonsei.ac.kr</p>
+                                <p class="contact_text_text">Email</p>
                             </div>
                         </div>
                         <div class="contact">
@@ -77,7 +77,7 @@
                                 </defs>
                             </svg>
                             <div class="contact_text">
-                                <p class="contact_text_text">www.abc.com</p>
+                                <p class="contact_text_text">Website</p>
                             </div>
                         </div>
                     </div>
@@ -110,50 +110,83 @@
         </section>
     </section>
     
-    <!-- QRCode.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
-    <script>
-        // card_qr_switch 버튼 누를 때 작동
-        function Switch() {
-            const btn = document.querySelector('.card_qr_switch');   // 버튼            
-            const card = document.getElementById('card');            // 명함 이미지
-            const qr = document.getElementById('qr');                // QR코드 이미지
-            const my_card = document.getElementById('my_card');
-            
-            // QR 부분
-            const CARD_PAGE_URL = "https://creamy-tim.github.io/BizDeck/qr/card.html";
-            const qrArea = document.getElementById('qrArea');        //QR 케이스
-            const userId = "choan1130"        //QR 아이디
-            const qrText = CARD_PAGE_URL + "?id=" + encodeURIComponent(userId);        //QR URL
-            let qr_image = null;
+    <!-- QRCode.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script type="module" src="home.js"></script>
 
-            // qr 상태 on/off
-            btn.classList.toggle('qr');   // 활성화/비활성화 토글
+<script type="module">
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-            // QR코드
-            if (btn.classList.contains('qr')) {
-                card.style.display = 'none';
-                qr.style.display = 'block';
-                my_card.style.display = 'none';
-                
-                qrArea.innerHTML = '';
+  const auth = getAuth();
+  const CARD_PAGE_URL = "https://creamy-tim.github.io/BizDeck/qr/card.html";
 
-                qrArea.style.display = 'block';
-                qr_image = new QRCode(qrArea, {
-                text: qrText,
-            });
-            }
-            // 명함
-            else {
-                card.style.display = 'block';
-                qr.style.display = 'none';
-                my_card.style.display = 'block';
+  // 🔹 QR에서 쓸 로그인 사용자 저장용 변수
+  let currentUser = null;
 
-                qrArea.style.display = 'none';
-            }
-        }
+  // 로그인 상태 감지해서 currentUser에 저장
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    if (user) {
+      console.log("QR용 로그인 감지:", user.email);
+    } else {
+      console.log("QR용: 로그아웃 상태");
+    }
+  });
 
-    </script>
+  // 카드/QR 스위치 함수
+  window.Switch = function () {
+      console.log("Switch 클릭됨");
+
+      const btn     = document.querySelector('.card_qr_switch');  
+      const card    = document.getElementById('card');           
+      const qr      = document.getElementById('qr');             
+      const my_card = document.getElementById('my_card');
+      const qrArea  = document.getElementById('qrArea');
+
+      // 상태 토글
+      btn.classList.toggle('qr');
+
+      // 🔵 QR 모드
+      if (btn.classList.contains('qr')) {
+
+          if (!currentUser) {
+              alert("로그인 후에 QR을 사용할 수 있습니다.");
+              btn.classList.remove('qr');
+              return;
+          }
+
+          const uId    = currentUser.uid;
+          const qrText = CARD_PAGE_URL + "?id=" + encodeURIComponent(uId);
+          console.log("QR 생성 URL:", qrText);
+
+          // 화면 전환
+          card.style.display    = 'none';
+          qr.style.display      = 'block';
+          my_card.style.display = 'none';
+
+          // QR 영역 초기화 + 생성
+          qrArea.innerHTML      = '';
+          qrArea.style.display  = 'block';
+
+          new QRCode(qrArea, {
+              text: qrText,
+              width: 200,
+              height: 200,
+              colorDark: "#000000",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.H
+          });
+
+      // 🔴 명함 모드
+      } else {
+          card.style.display    = 'block';
+          qr.style.display      = 'none';
+          my_card.style.display = 'block';
+          qrArea.style.display  = 'none';
+      }
+  };
+</script>
+
 </body>
 </html>
