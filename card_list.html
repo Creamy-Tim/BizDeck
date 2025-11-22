@@ -111,7 +111,7 @@
                                         <p class="contact_text_text">www.abc.com</p>
                                     </div>
 
-                                <img src="./assets/img/myb_logo.png" class="logo_img">
+                                <img src="assets\img\BizDeck_logo.svg" class="logo_img">
                             </div>
                         </div>
 
@@ -160,7 +160,7 @@
                                         <p class="contact_text_text">www.abc.com</p>
                                     </div>
 
-                                <img src="./assets/img/myb_logo.png" class="logo_img">
+                                <img src="assets\img\BizDeck_logo.svg" class="logo_img">
                             </div>
                         </div> 
                         </div>
@@ -229,52 +229,49 @@
             상세 카드 열기
             --------------------------- */
             function openDetail(id) {
+            const d = cardData[id];
 
-                const d = cardData[id];
+            document.getElementById("listView").style.display = "none";
+            document.getElementById("detailView").style.display = "block";
 
-                // 리스트 숨기기
-                document.getElementById("listView").style.display = "none";
+            document.getElementById("detailView").innerHTML = `
+                <div class="detail-wrapper">
 
-                // 상세 표시
-                document.getElementById("detailView").style.display = "block";
-
-                document.getElementById("detailView").innerHTML = `
                     <div class="detail-card" style="background:${d.color}">
-                        <img src="./assets/img/detail.png" class="detail-top-img">
+                        <img src="assets\img\detail.png" class="detail-top-img">
 
-                        <div class="detail-main">
+                        <div class="detail-profile">
                             <div class="detail-name">${d.name}</div>
                             <div class="detail-job">${d.job}</div>
-                            <div class="detail-contact">📞 ${d.phone}</div>
-                            <div class="detail-contact">📧 ${d.email}</div>
-                            <div class="detail-contact">🌐 ${d.web}</div>
+
+                            <div class="detail-contacts">
+                                <p>📞 ${d.phone}</p>
+                                <p>📧 ${d.email}</p>
+                                <p>🌐 ${d.web}</p>
+                            </div>
+                             <div class="info-section">
+                                <div class="info-section-title">USING TOOLS</div>
+                                <div class="tools-list">${d.tools}</div>
+                            </div>
+
+                            <div class="info-section">
+                                <div class="info-section-title">CAREER</div>
+                                <div class="career-box">${d.career}</div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Using Tools -->
-                    <div class="info-section">
-                        <div class="info-section-title">USING TOOLS</div>
-                        <div class="tools-list">${d.tools}</div>
-                    </div>
-
-                    <!-- Career -->
-                    <div class="info-section">
-                        <div class="info-section-title">CAREER</div>
-                        <div class="career-box">${d.career}</div>
-                    </div>
+                   
 
                     <div class="back-btn" onclick="closeDetail()">← Back to List</div>
-                `;
-            }
+                </div>
+            `;
+        }
 
-
-            /* ---------------------------
-                뒤로가기
-            --------------------------- */
-            function closeDetail() {
-                document.getElementById("detailView").style.display = "none";
-                document.getElementById("listView").style.display = "block";
-            }
+        function closeDetail() {
+            document.getElementById("detailView").style.display = "none";
+            document.getElementById
+        }
 
             </script>
     </body>
