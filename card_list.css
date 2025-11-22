@@ -1,16 +1,16 @@
-.card_list_title {
+/* .card_list_title {
     height: 40px;
     margin: 50px 0 0 16px;
     font-family: 'SpartanMB';
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
-}
+} */
 
 .card_list {
     width: 360px;
     height: auto;
-    margin: 20px auto 0;
+    margin: 60px auto 0;
 
 }
 
