@@ -1,0 +1,217 @@
+/* 폰트 등록 */
+
+@font-face {
+  font-family: 'SpartanMB';
+  src: url('./assets/fonts/SpartanMB-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'SpartanMB';
+  src: url('./assets/fonts/SpartanMB-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nagoda';
+  src: url('./assets/fonts/Nagoda.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+
+/* 핸드폰 크기 */
+.phone {
+    width: 375px;
+    height: 812px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    position: relative;
+    margin: 0 auto; /* 가로 가운데 배치 */
+
+    overflow-y: scroll; /* 세로 스크롤 */
+    /* 사이트별 스크롤바 숨기기 */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* 사이트별 스크롤바 숨기기 */
+.phone::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* [페이지이름       알림] 이부분 */
+.header {
+    height: 40px;
+    position: relative;
+    margin-top: 68px;
+    display: flex;  /* 가로로 배열 */
+    align-items: center; /* 세로 가운데정렬 */
+}
+
+/* 헤더 중 페이지 이름 */
+.page_name {
+    font-family: 'SpartanMB';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    margin: 0px;
+    margin-left: 16px;
+}
+
+/* 헤더 중 알람 (종모양 버튼) */
+.bell {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 10px;
+}
+
+/* ----- 헤더 ----- */
+
+
+.card {
+    width: 360px;
+    height: 230px;
+    background-color: #FB1CFF;
+    border-radius: 24px;
+    margin-bottom: 8px;
+}
+
+
+/* ----- 명함 내부 영역 ----- */
+.my_card {
+  width: 343px;
+  height: 220px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  position: relative;
+}
+
+.my_name, .my_job {
+    width: 157px;
+    height: 36px;
+
+    position: relative;
+    top: 25px;
+    left: 22px;
+    background-color: transparent;
+    border: 1px dashed #000000;
+    border-radius: 4px;
+
+    /* 내부 텍스트 배치 */
+    display: flex;
+    align-items: center;
+}
+
+.my_job {
+    height: 27px;
+    margin-top: 6px;
+}
+
+.contact_case {
+    width: 142px;
+    height: 70px;
+    margin-top: 46px;
+    margin-left: 24px;
+}
+
+.contact {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-bottom: 2px;
+}
+
+svg path {
+  fill: #000000;
+}
+
+.contact_text {
+    width: 110px;
+    height: 22px;
+    border: 1px dashed #000000;
+    border-radius: 4px;
+    margin: 0;
+    margin-left: 6px;
+
+    color: #000000;
+    font-family: "Spartan MB";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.logo {
+    width: 112px;
+    height: 51px;
+    border: 1px dashed #000000;
+    border-radius: 4px;
+    position: absolute;
+    right: 22px;
+     bottom: 27px;
+}
+
+/* ----- 명함 내부 영역 ----- */
+
+
+
+/* 하단바 */
+.footer {
+    width: 328px;
+    height: 64px;
+    background-color: rgba(20, 20, 20, 0.35);
+    backdrop-filter: blur(2px); /* 이 요소 뒷 배경 블러처리 */
+    border-radius: 32px;
+    display: flex;
+    align-items: center; /* 세로 가운데정렬 */
+    position: sticky;
+    bottom: 112px;
+    margin: 0 auto;
+    /* 가운데 정렬 */
+    z-index: 100; /* 배치를 앞으로 하는 정도(ex. PPT에서 맨앞으로 보내기) */
+}
+
+/* 하단바 중 흰 부분 */
+.choice {
+    width: 108px;
+    height: 48px;
+    background-color: #ffffff;
+    border-radius: 24px;
+    display: flex;
+    align-items: center; /* 세로 가운데정렬 */
+    position: absolute;
+    /* left 옵션은 페이지별 css 파일에 입력 */
+    z-index: 20; /* 배치를 앞으로 하는 정도) */
+}
+
+/* 하단바 각 버튼 이미지 */
+.home_button, .card_list_button, .setting_button{
+    width: auto;
+    height: 24px;
+    position: absolute;
+    /* left 옵션은 페이지별 css 파일에 입력 */
+    z-index: 30; /* 배치를 앞으로 하는 정도 */
+    cursor: pointer;
+}
+
+/* 하단바 중 선택시 나오는 텍스트 (ex. Home) */
+.footer_text {
+    font-family: 'SpartanMB';
+    font-size: 16px;
+    font-style: normal;
+    color: #5900FF;
+    font-weight: 600;
+    margin: 0px;
+    position: absolute;
+    right: 14px;
+}
+
+/* ----- 하단바 ----- */
+

@@ -1,0 +1,253 @@
+.back_button {
+  width: 56px;
+  height: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #000000;
+  position: absolute;
+  right: 15px;
+}
+
+.back_button:hover {
+    font-weight: 600;
+    background-color:#000000;
+    color: #FFFFFF;
+    cursor:pointer;
+}
+
+.my_card_case {
+    width: 360px;
+    height: 252px;
+    /* 그라데이션 */
+    background: radial-gradient(at 30% 20%, #f7f7f7, transparent 60%),
+                radial-gradient(at 90% 40%, #e3e6f9, transparent 60%),
+                radial-gradient(at 70% 90%, #d5d9f9, #d6daf9);
+
+    border-radius: 16px;
+    margin: 24px auto 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card_list_title {
+    height: 24px;
+    margin: 32px 0 0 16px;
+    font-family: 'SpartanMB';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.ui_case, .text_case, .color_case {
+    width: 360px;
+    border-radius: 16px;
+    background: rgba(217, 217, 217, 0.20);
+    margin: 8px auto 0;
+}
+
+.ui_case {
+    height: 116px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    overflow-x: auto;     /* 가로 스크롤 */
+    overflow-y: hidden;   /* 세로 스크롤 방지 */
+    -ms-overflow-style: none;  /* IE, Edge */
+    scrollbar-width: none;      /* Firefox */
+}
+
+.ui_case::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+.namecard_making{
+    width: 120px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background-color:#FFFFFF;;
+    border-color: #141414;
+    border: 1px solid #141414;
+    margin-left: 8px;
+    position: relative;
+}
+
+.elements1{
+    width: 57.5px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #959595;
+    background: #616161;
+    margin-top: 8px;
+    margin-left: 4px;
+}
+
+.elements2{
+    width: 57.5px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #959595;
+    background: #616161;
+    margin-top: 8px;
+    margin-left: 4px;
+  }
+
+.elements2{
+    width: 57.5px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #959595;
+    background: #616161;
+    margin-top: 8px;
+    margin-left: 4px;
+}
+
+.elements3{
+    width: 30px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1.251px solid #959595;
+    background: #616161;
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+}
+
+.text_case {
+    height: 209px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.style_case, .font_case, .size_case {
+  width: 344px;
+  height: 48px;
+  position: relative;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  z-index: 20;
+}
+
+.style_box, .size_box {
+  width: 48px;
+  height: 48px;
+  background: #ffffff;
+  border: 1px solid #D9D9D9;
+  border-radius: 4px;
+  margin-right: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.style_text, .size_text {
+  color: #959595;
+  font-family: "Spartan MB";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* 위에 추가 스타일 있음 */
+.font_case {
+  height: 19px;
+  margin-top: 32px;
+}
+
+.tools_text {
+  color: #959595;
+  font-family: "Spartan MB";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0;
+  margin-right: 36px;
+}
+
+/* 위에 추가 스타일 있음 */
+.size_case {
+  margin-top: 30px;
+}
+
+.size_box {
+  margin-right: 8px;
+}
+
+.size_text {
+  font-size: 16px;
+}
+
+/* 위에 추가 스타일 있음 */
+.color_case {
+    height: 118px;
+    display: flex;
+}
+
+.palette_case {
+  width: 162px;
+  height: 90px;
+  position: relative;
+  top: 12px;
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+.palette {
+  width: 166px;
+  height: 66px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);  /* 5개씩 배치 */
+}
+
+.palette_color {
+  width: 29px;
+  height: 29px;
+  border-radius: 4px;
+  position: relative;
+  margin: 0 4px 4px 0;
+}
+
+.save_button {
+  width: 56px;
+  height: 32px;
+  background: #D7F439;
+  border: none;
+  border-radius: 16px;
+  position: absolute;
+  margin-top: 23px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+/* 다른 css 속성은 component.css */
+.choice {
+    left: 166px;
+    width: 119px;
+}
+
+.home_button {
+    left: 55px;
+}
+
+.card_list_button {
+    left: 110px;
+}
+
+.setting_button {
+    left: 179px;
+}
