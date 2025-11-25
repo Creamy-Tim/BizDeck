@@ -14,57 +14,54 @@ const auth = firebase.auth();
 
 // 🔹 친구들의 명함 데이터를 불러오는 함수
 async function loadFriendsProfile(userUid) {
-  try {
+try {
     const userRef = doc(db, "users", userUid);
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
-      console.log("사용자 데이터가 없습니다.");
-      return;
+    console.log("사용자 데이터가 없습니다.");
+    return;
     }
 
     const userData = userSnap.data();
     const friendUids = userData.friend || [];  // 친구들의 UID 배열
+    console.log("친구들의 UID 배열:", friendUids);  // friend 배열을 콘솔에 출력
 
-    // 친구들의 데이터가 제대로 불러와졌는지 확인
-    console.log("친구들의 UID 배열:", friendUids);
-
-    // 2. 친구들의 데이터를 가져오기
-    const friendsData = [];
-
-    for (const friendUid of friendUids) {
-      const friendRef = doc(db, "users", friendUid);
-      const friendSnap = await getDoc(friendRef);
-
-      if (friendSnap.exists()) {
-        friendsData.push(friendSnap.data());  // 친구 데이터 저장
-      } else {
-        console.log(`${friendUid} 의 데이터가 존재하지 않습니다.`);
-      }
+    if (friendUids.length === 0) {
+    console.log("친구 목록이 비어 있습니다.");
+    return;
     }
 
-    // 3. 친구들의 데이터를 화면에 반영
+    const friendsData = [];
+    for (const friendUid of friendUids) {
+    const friendRef = doc(db, "users", friendUid);
+    const friendSnap = await getDoc(friendRef);
+
+    if (friendSnap.exists()) {
+        friendsData.push(friendSnap.data());  // 친구 데이터 저장
+    } else {
+        console.log(`${friendUid} 의 데이터가 존재하지 않습니다.`);
+    }
+    }
+
     if (friendsData.length === 0) {
-      console.log("친구 명함 데이터가 없습니다.");
+    console.log("친구 명함 데이터가 없습니다.");
     }
     friendsData.forEach(friend => {
-      createCard(friend);  // createCard 함수로 동적으로 명함 생성
+    createCard(friend);  // createCard 함수로 동적으로 명함 생성
     });
 
-  } catch (err) {
+} catch (err) {
     console.error("친구 명함 불러오기 실패:", err.message);
     alert("친구 명함 불러오기 실패");
-  }
 }
-
+}
 
 // 🔹 명함 추가 함수 (친구 명함을 동적으로 생성)
 function createCard({ nickname, title, phone, email, website }) {
-  const card = document.createElement('div');
-  card.classList.add('my_card');
-
-  // 명함 구조 동적으로 삽입
-  card.innerHTML = `
+const card = document.createElement('div');
+card.classList.add('my_card');
+card.innerHTML = `
     <div class="my_name">
         <p class="my_name_text">${nickname || 'Name'}</p>
     </div>
@@ -85,13 +82,10 @@ function createCard({ nickname, title, phone, email, website }) {
     <div class="logo">
         <img src="./assets/img/BizDeck_logo.svg" class="logo_img">
     </div>
-  `;
-
-  // 명함을 cards-container에 추가
-  const cardsContainer = document.getElementById('cards-container');
-  cardsContainer.appendChild(card);
+`;
+const cardsContainer = document.getElementById('cards-container');
+cardsContainer.appendChild(card);
 }
-
 
 // 🔹 명함 저장하기 함수
 async function saveProfile() {
@@ -131,43 +125,22 @@ async function saveProfile() {
 }
 
 // 🔹 여러 명함 불러오기 함수
-async function loadProfile(userUid) {
-  try {
-    const userRef = doc(db, "users", userUid);
-    const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      console.log("사용자 데이터가 없습니다.");
-      return;
+async function loadProfiles() {
+    const usersRef = firebase.firestore().collection("users"); // 여러 명을 조회
+    try {
+        const querySnapshot = await usersRef.get();
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+            createCard(data);  // Firestore 데이터로 명함 생성
+        });
+    } catch (err) {
+        console.error("명함 불러오기 실패:", err.message);
+        alert("명함 불러오기 실패");
     }
-
-    const userData = userSnap.data();
-    const { nickname, title, phone, email, website } = userData;
-
-    // UI 요소가 존재하는지 확인 후 textContent 설정
-    const nameEl = document.getElementById("nameEl");
-    const titleEl = document.getElementById("titleEl");
-    const phoneEl = document.getElementById("contactEl");
-    const emailEl = document.getElementById("emailEl");
-    const websiteEl = document.getElementById("websiteEl");
-
-    if (nameEl) nameEl.textContent = nickname || '이름 없음';
-    if (titleEl) titleEl.textContent = title || '직무 없음';
-    if (phoneEl) phoneEl.textContent = phone || '전화번호 없음';
-    if (emailEl) emailEl.textContent = email || '이메일 없음';
-    if (websiteEl) websiteEl.textContent = website || '웹사이트 없음';
-    
-    console.log("불러온 데이터:", userData);
-
-  } catch (err) {
-    console.error("명함 불러오기 실패:", err.message);
-    alert("명함 불러오기 실패");
-  }
 }
 
-
-// 페이지가 로드될 때 기존 명함을 불러옴
+// 페이지가 로드될 때 친구 명함 불러오기
 window.onload = function() {
-    const userUid = "현재_사용자_UID";  // 현재 로그인된 사용자의 UID를 가져와야 합니다.
-    loadFriendsProfile(userUid);  // 친구 명함을 불러옵니다.
+    const userUid = "현재_사용자_UID";  // 로그인된 사용자의 UID 가져오기
+    loadFriendsProfile(userUid);  // 친구 명함 불러오기
 }
