@@ -131,19 +131,40 @@ async function saveProfile() {
 }
 
 // 🔹 여러 명함 불러오기 함수
-async function loadProfiles() {
-    const usersRef = firebase.firestore().collection("users"); // 여러 명을 조회
-    try {
-        const querySnapshot = await usersRef.get();
-        querySnapshot.forEach(doc => {
-            const data = doc.data();
-            createCard(data);  // Firestore 데이터로 명함 생성
-        });
-    } catch (err) {
-        console.error("명함 불러오기 실패:", err.message);
-        alert("명함 불러오기 실패");
+async function loadProfile(userUid) {
+  try {
+    const userRef = doc(db, "users", userUid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      console.log("사용자 데이터가 없습니다.");
+      return;
     }
+
+    const userData = userSnap.data();
+    const { nickname, title, phone, email, website } = userData;
+
+    // UI 요소가 존재하는지 확인 후 textContent 설정
+    const nameEl = document.getElementById("nameEl");
+    const titleEl = document.getElementById("titleEl");
+    const phoneEl = document.getElementById("contactEl");
+    const emailEl = document.getElementById("emailEl");
+    const websiteEl = document.getElementById("websiteEl");
+
+    if (nameEl) nameEl.textContent = nickname || '이름 없음';
+    if (titleEl) titleEl.textContent = title || '직무 없음';
+    if (phoneEl) phoneEl.textContent = phone || '전화번호 없음';
+    if (emailEl) emailEl.textContent = email || '이메일 없음';
+    if (websiteEl) websiteEl.textContent = website || '웹사이트 없음';
+    
+    console.log("불러온 데이터:", userData);
+
+  } catch (err) {
+    console.error("명함 불러오기 실패:", err.message);
+    alert("명함 불러오기 실패");
+  }
 }
+
 
 // 페이지가 로드될 때 기존 명함을 불러옴
 window.onload = function() {
