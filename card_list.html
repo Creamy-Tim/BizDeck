@@ -16,34 +16,8 @@
         </section>
         <section class="body">
             <p class="card_list_title">Recent watched</p>
-            <div class="card_list">
-
-                <!-- 명함 -->
-                <div class="my_card" id="my_card">
-                    <div class="my_name">
-                        <p class="my_name_text">Name</p>
-                    </div>
-                    <div class="my_job">
-                        <p class="my_job_text">Job</p>
-                    </div>
-                    <div class="contact_case">
-                        <div class="contact">
-                            <!-- 전화번호 아이콘 SVG -->
-                            <p class="contact_text_text">010-0000-0000</p>
-                        </div>
-                        <div class="contact">
-                            <!-- 이메일 아이콘 SVG -->
-                            <p class="contact_text_text">Email</p>
-                        </div>
-                        <div class="contact">
-                            <!-- 웹사이트 아이콘 SVG -->
-                            <p class="contact_text_text">Website</p>
-                        </div>
-                    </div>
-                    <div class="logo">
-                        <img src="./assets/img/BizDeck_logo.svg" class="logo_img">
-                    </div>
-                </div>
+            <div class="card_list" id="cards-container">
+                <!-- 동적으로 친구 명함이 표시될 영역 -->
             </div>
         </section>
         <section class="footer">
@@ -55,8 +29,7 @@
             <img src="./assets/img/setting.png" class="setting_button" onclick="location.href='setting.html'">
         </section>
     </section>
-    
-    
+
     <!-- Firebase 관련 스크립트 (Firebase SDK 추가) -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js" type="module"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js" type="module"></script>

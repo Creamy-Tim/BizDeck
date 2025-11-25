@@ -12,8 +12,7 @@ const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-
-// 친구들의 명함 데이터를 불러오는 함수
+// 🔹 친구들의 명함 데이터를 불러오는 함수
 async function loadFriendsProfile(userUid) {
   try {
     const userRef = doc(db, "users", userUid);
@@ -59,10 +58,8 @@ async function loadFriendsProfile(userUid) {
 }
 
 
-
-// 명함 추가 함수
-function createCard({ nickname, title, phone, email, website, friend }) {
-  // 새로운 명함 요소 생성
+// 🔹 명함 추가 함수 (친구 명함을 동적으로 생성)
+function createCard({ nickname, title, phone, email, website }) {
   const card = document.createElement('div');
   card.classList.add('my_card');
 
@@ -76,15 +73,12 @@ function createCard({ nickname, title, phone, email, website, friend }) {
     </div>
     <div class="contact_case">
         <div class="contact">
-            <!-- 전화번호 아이콘 SVG -->
             <p class="contact_text_text">${phone || '010-0000-0000'}</p>
         </div>
         <div class="contact">
-            <!-- 이메일 아이콘 SVG -->
             <p class="contact_text_text">${email || 'Email'}</p>
         </div>
         <div class="contact">
-            <!-- 웹사이트 아이콘 SVG -->
             <p class="contact_text_text">${website || 'Website'}</p>
         </div>
     </div>
@@ -99,27 +93,12 @@ function createCard({ nickname, title, phone, email, website, friend }) {
 }
 
 
-// 🔹 여러 명함 불러오기 함수
-async function loadProfiles() {
-    const usersRef = firebase.firestore().collection("users"); // 여러 명을 조회
-    try {
-    const querySnapshot = await usersRef.get();
-    querySnapshot.forEach(doc => {
-        const data = doc.data();
-        createCard(data); // Firestore 데이터로 명함 생성
-    });
-    } catch (err) {
-    console.error("명함 불러오기 실패:", err.message);
-    alert("명함 불러오기 실패");
-    }
-}
-
 // 🔹 명함 저장하기 함수
 async function saveProfile() {
     const user = auth.currentUser;
     if (!user) {
-    alert("로그인 후 수정 가능합니다.");
-    return;
+        alert("로그인 후 수정 가능합니다.");
+        return;
     }
 
     const name = document.getElementById("nameEl").value;
@@ -133,28 +112,41 @@ async function saveProfile() {
     console.log("Firestore에 저장할 데이터:", { name, title, contact, email, website });
 
     try {
-    console.log("Firestore에 데이터 저장 중...");
-    await ref.set(
-        {
-        nickname: name,
-        title: title,
-        phone: contact,
-        email: email,
-        website: website,
-        },
-        { merge: true }
-    );
+        await ref.set(
+            {
+                nickname: name,
+                title: title,
+                phone: contact,
+                email: email,
+                website: website,
+            },
+            { merge: true }
+        );
 
-    console.log("명함이 저장되었습니다.");
-
-    // 저장 후 명함을 다시 불러옴
-    loadProfiles();
+        console.log("명함이 저장되었습니다.");
+        loadProfiles();  // 저장 후 명함을 다시 불러옴
     } catch (err) {
-    console.error("Firestore에 저장 실패:", err.message);
+        console.error("Firestore에 저장 실패:", err.message);
+    }
+}
+
+// 🔹 여러 명함 불러오기 함수
+async function loadProfiles() {
+    const usersRef = firebase.firestore().collection("users"); // 여러 명을 조회
+    try {
+        const querySnapshot = await usersRef.get();
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+            createCard(data);  // Firestore 데이터로 명함 생성
+        });
+    } catch (err) {
+        console.error("명함 불러오기 실패:", err.message);
+        alert("명함 불러오기 실패");
     }
 }
 
 // 페이지가 로드될 때 기존 명함을 불러옴
 window.onload = function() {
-    loadProfiles();
+    const userUid = "현재_사용자_UID";  // 현재 로그인된 사용자의 UID를 가져와야 합니다.
+    loadFriendsProfile(userUid);  // 친구 명함을 불러옵니다.
 }
