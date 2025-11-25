@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// 👉 기본 명함 값 (HTML에도 이미 들어가 있지만, 참고용으로 보관)
+// 기본 명함 값 (HTML에도 이미 들어가 있지만, 참고용으로 보관)
 const DEFAULT_CARD = {
   name: "Name",
   title: "Job",
