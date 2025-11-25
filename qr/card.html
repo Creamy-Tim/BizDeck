@@ -135,7 +135,12 @@
     // 5️⃣ 나중에 연동할 버튼들 (지금은 안내만)
     if (btnSaveToApp) {
         btnSaveToApp.addEventListener("click", function () {
-            alert("앱 연동은 추후에 추가될 예정입니다.");
+            const friendUid = getUidFromUrl(); // QR 코드에서 `uid` 추출
+            if (friendUid) {
+                addFriend(friendUid); // 친구 추가 함수 호출
+            } else {
+                alert("친구 정보를 불러올 수 없습니다.");
+            }
         });
     }
 
