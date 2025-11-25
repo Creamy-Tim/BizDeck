@@ -14,11 +14,12 @@ const auth = firebase.auth();
 
 // 명함 추가 함수
 function createCard({ nickname, title, phone, email, website }) {
-    const card = document.createElement('div');
-    card.classList.add('my_card');
-    card.classList.add('my-card-instance');
+  // 새로운 명함 요소 생성
+  const card = document.createElement('div');
+  card.classList.add('my_card');
 
-    card.innerHTML = `
+  // 명함 구조 동적으로 삽입
+  card.innerHTML = `
     <div class="my_name">
         <p class="my_name_text">${nickname || 'Name'}</p>
     </div>
@@ -27,24 +28,28 @@ function createCard({ nickname, title, phone, email, website }) {
     </div>
     <div class="contact_case">
         <div class="contact">
+            <!-- 전화번호 아이콘 SVG -->
             <p class="contact_text_text">${phone || '010-0000-0000'}</p>
         </div>
         <div class="contact">
+            <!-- 이메일 아이콘 SVG -->
             <p class="contact_text_text">${email || 'Email'}</p>
         </div>
         <div class="contact">
+            <!-- 웹사이트 아이콘 SVG -->
             <p class="contact_text_text">${website || 'Website'}</p>
         </div>
     </div>
     <div class="logo">
         <img src="./assets/img/BizDeck_logo.svg" class="logo_img">
     </div>
-    `;
-    
-    // 명함을 cards-container에 추가
-    const cardsContainer = document.getElementById('cards-container');
-    cardsContainer.appendChild(card);
+  `;
+
+  // 명함을 cards-container에 추가
+  const cardsContainer = document.getElementById('cards-container');
+  cardsContainer.appendChild(card);
 }
+
 
 // 🔹 여러 명함 불러오기 함수
 async function loadProfiles() {
