@@ -1,17 +1,16 @@
-
 // Firebase 모듈을 개별적으로 임포트
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
 
 // Firebase 초기화
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -20,54 +19,54 @@ const auth = getAuth(app);
 
 // 🔹 친구들의 명함 데이터를 불러오는 함수
 async function loadFriendsProfile(userUid) {
-try {
+  try {
     const userRef = doc(db, "users", userUid);
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
-    console.log("사용자 데이터가 없습니다.");
-    return;
+      console.log("사용자 데이터가 없습니다.");
+      return;
     }
 
     const userData = userSnap.data();
     const friendUids = userData.friend || [];  // 친구들의 UID 배열
-    console.log("친구들의 UID 배열:", friendUids);  // friend 배열을 콘솔에 출력
 
-    if (friendUids.length === 0) {
-    console.log("친구 목록이 비어 있습니다.");
-    return;
-    }
+    // 친구들의 데이터가 제대로 불러와졌는지 확인
+    console.log("친구들의 UID 배열:", friendUids);
 
+    // 2. 친구들의 데이터를 가져오기
     const friendsData = [];
+
     for (const friendUid of friendUids) {
-    const friendRef = doc(db, "users", friendUid);
-    const friendSnap = await getDoc(friendRef);
+      const friendRef = doc(db, "users", friendUid);
+      const friendSnap = await getDoc(friendRef);
 
-    if (friendSnap.exists()) {
+      if (friendSnap.exists()) {
         friendsData.push(friendSnap.data());  // 친구 데이터 저장
-    } else {
+      } else {
         console.log(`${friendUid} 의 데이터가 존재하지 않습니다.`);
-    }
+      }
     }
 
+    // 3. 친구들의 데이터를 화면에 반영
     if (friendsData.length === 0) {
-    console.log("친구 명함 데이터가 없습니다.");
+      console.log("친구 명함 데이터가 없습니다.");
     }
     friendsData.forEach(friend => {
-    createCard(friend);  // createCard 함수로 동적으로 명함 생성
+      createCard(friend);  // createCard 함수로 동적으로 명함 생성
     });
 
-} catch (err) {
+  } catch (err) {
     console.error("친구 명함 불러오기 실패:", err.message);
     alert("친구 명함 불러오기 실패");
-}
+  }
 }
 
 // 🔹 명함 추가 함수 (친구 명함을 동적으로 생성)
 function createCard({ nickname, title, phone, email, website }) {
-const card = document.createElement('div');
-card.classList.add('my_card');
-card.innerHTML = `
+  const card = document.createElement('div');
+  card.classList.add('my_card');
+  card.innerHTML = `
     <div class="my_name">
         <p class="my_name_text">${nickname || 'Name'}</p>
     </div>
@@ -88,13 +87,19 @@ card.innerHTML = `
     <div class="logo">
         <img src="./assets/img/BizDeck_logo.svg" class="logo_img">
     </div>
-`;
-const cardsContainer = document.getElementById('cards-container');
-cardsContainer.appendChild(card);
+  `;
+  const cardsContainer = document.getElementById('cards-container');
+  cardsContainer.appendChild(card);
 }
 
 // 페이지가 로드될 때 친구 명함 불러오기
 window.onload = function() {
-    const userUid = "현재_사용자_UID";  // 로그인된 사용자의 UID 가져오기
+  const userUid = auth.currentUser ? auth.currentUser.uid : null;
+
+  if (userUid) {
     loadFriendsProfile(userUid);  // 친구 명함 불러오기
+  } else {
+    console.log("사용자가 로그인되지 않았습니다.");
+    alert("로그인 후 명함을 불러올 수 있습니다.");
+  }
 }
