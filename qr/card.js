@@ -1,184 +1,115 @@
 // ======================
-// 0. Firebase SDK 모듈 가져오기
+// 0. Firebase SDK 모듈 가져오기 (CDN 버전)
 // ======================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
 // ======================
 // 1. Firebase 초기화
-//    (⚠️ 값은 Firebase 콘솔에서 복붙한 걸 그대로 써야 합니다.)
 // ======================
 const firebaseConfig = {
-  apiKey: "AIzaSyChGzlnFvC5vFhqxUQ5effl775sdDr1lBE",        // ← 콘솔 값으로 맞게 넣기
+  apiKey: "AIzaSyChGzlnFvC5vFhqxqDyP-ZNFirvSxzI0Z0",
   authDomain: "bizdeck-9fae5.firebaseapp.com",
   projectId: "bizdeck-9fae5",
-  storageBucket: "bizdeck-9fae5.appspot.com",                // 보통 projectId + ".appspot.com" 형식 (콘솔에서 한 번만 확인)
+  storageBucket: "bizdeck-9fae5.firebasestorage.app",
   messagingSenderId: "947125248466",
-  appId: "1:947125248466:web:15f0c0a2f4b0c3d7d2b5d1",
-  measurementId: "G-RQH9ZC2XYZ"
+  appId: "1:947125248466:web:255f15e2555a7e43a5a80b",
+  measurementId: "G-RQ7KHXBP6J"
 };
 
-const app  = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db   = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
 
-console.log("[Firebase] 초기화 완료");
-
+console.log("[card] Firebase 초기화 완료");
 
 // ======================
-// 2. DOM 요소 잡기
+// 2. DOM 요소
 // ======================
-const nameEl      = document.querySelector(".my_name_text");
-const jobEl       = document.querySelector(".my_job_text");
-const contactEls  = document.querySelectorAll(".contact_text_text");
-// contactEls[0] = phone, contactEls[1] = email, contactEls[2] = website
+const nameEl     = document.querySelector(".my_name_text");
+const jobEl      = document.querySelector(".my_job_text");
+const contactEls = document.querySelectorAll(".contact_text_text");
+// [0] phone, [1] email, [2] website
 
-console.log("[DOM] nameEl:", !!nameEl, "| jobEl:", !!jobEl, "| contactEls length:", contactEls.length);
-
+console.log("[card] DOM:",
+  "nameEl =", !!nameEl,
+  "jobEl =", !!jobEl,
+  "contactEls.length =", contactEls.length
+);
 
 // ======================
-// 3. URL 에서 UID 꺼내기 (uid / id 둘 다 지원)
+// 3. URL에서 uid(id) 읽기
 // ======================
 function getUidFromUrl() {
-  try {
-    const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
+  const uidFromUid = params.get("uid");
+  const uidFromId  = params.get("id");   // QR에서 사용하는 파라미터
 
-    const uidFromUid = params.get("uid");
-    const uidFromId  = params.get("id");   // QR 링크에서 사용하는 파라미터
+  const uid = (uidFromUid && uidFromUid.trim() !== "")
+    ? uidFromUid.trim()
+    : (uidFromId && uidFromId.trim() !== "")
+      ? uidFromId.trim()
+      : null;
 
-    const uid = (uidFromUid && uidFromUid.trim() !== "")
-      ? uidFromUid.trim()
-      : (uidFromId && uidFromId.trim() !== "")
-        ? uidFromId.trim()
-        : null;
-
-    if (uid) {
-      console.log("[URL] uid 감지:", uid);
-      return uid;
-    } else {
-      console.log("[URL] uid / id 파라미터가 없습니다.");
-      return null;
-    }
-  } catch (e) {
-    console.error("[URL] uid 파싱 실패:", e);
+  if (uid) {
+    console.log("[card] URL에서 uid 감지:", uid);
+    return uid;
+  } else {
+    console.log("[card] uid/id 파라미터 없음");
     return null;
   }
 }
 
-
 // ======================
-// 4. Firestore 에서 명함 불러오기
+// 4. Firestore에서 프로필 불러오기
 // ======================
 async function loadProfileByUid(uid) {
   if (!uid) {
-    console.log("[loadProfileByUid] uid 없음 → 중단");
+    console.log("[card] uid 없음 → 로드 중단");
     return;
   }
 
-  console.log("[loadProfileByUid] 호출, uid =", uid);
+  console.log("[card] Firestore 로드 시도, uid =", uid);
 
   try {
-    const ref  = doc(db, "users", uid);   // ← 컬렉션 이름이 다르면 여기 수정
+    // 컬렉션 이름: users (스크린샷과 동일)
+    const ref  = doc(db, "users", uid);
     const snap = await getDoc(ref);
 
-    console.log("[loadProfileByUid] snap.exists? =", snap.exists());
+    console.log("[card] snap.exists? =", snap.exists());
 
     if (!snap.exists()) {
-      console.log("[loadProfileByUid] 해당 UID 문서가 없습니다:", uid);
+      console.log("[card] 해당 uid 문서가 없습니다:", uid);
       return;
     }
 
     const data = snap.data();
-    console.log("[loadProfileByUid] 불러온 문서 데이터:", data);
+    console.log("[card] 불러온 데이터:", data);
 
-    // 🔹 필드명 여러 패턴 커버 (실제 Firestore 필드명에 맞게 추가/수정 가능)
-    const displayName   = data.name    || data.nickname || data.userName || "";
-    const displayJob    = data.job     || data.title    || data.major    || "";
-    const displayPhone  = data.phone   || data.tel      || data.contact  || "";
-    const displayEmail  = data.email   || data.mail     || "";
-    const displaySite   = data.website || data.link     || data.url      || "";
+    // 🔹 Firestore 필드명에 1:1로 맞춤
+    const displayName  = data.nickname || "";
+    const displayJob   = data.title    || "";
+    const displayPhone = data.phone    || "";
+    const displayEmail = data.email    || "";
+    const displaySite  = data.website  || "";
 
     if (nameEl) nameEl.textContent = displayName || "이름 정보 없음";
-    if (jobEl)  jobEl.textContent  = displayJob  || "직무/소속 정보 없음";
+    if (jobEl)  jobEl.textContent  = displayJob  || "소속/직함 정보 없음";
 
-    if (contactEls.length > 0) contactEls[0].textContent = displayPhone || "연락처 정보 없음";
-    if (contactEls.length > 1) contactEls[1].textContent = displayEmail || "이메일 정보 없음";
-    if (contactEls.length > 2) contactEls[2].textContent = displaySite  || "웹사이트 정보 없음";
+    if (contactEls[0]) contactEls[0].textContent = displayPhone || "전화번호 없음";
+    if (contactEls[1]) contactEls[1].textContent = displayEmail || "이메일 없음";
+    if (contactEls[2]) contactEls[2].textContent = displaySite  || "웹사이트 없음";
 
   } catch (err) {
-    console.error("[loadProfileByUid] 프로필 로드 중 오류:", err.code, err.message);
+    console.error("[card] 프로필 로드 오류:", err.code, err.message);
   }
 }
 
-
 // ======================
-// 5. 명함 저장 (로그인한 본인용 – 필요할 때만 사용)
+// 5. 초기 실행
 // ======================
-async function saveProfile() {
-  const user = auth.currentUser;
-  if (!user) {
-    alert("로그인 후에만 저장할 수 있습니다.");
-    console.warn("[saveProfile] currentUser 없음");
-    return;
-  }
-
-  const uid = user.uid;
-  console.log("[saveProfile] 저장 시도, uid =", uid);
-
-  const payload = {
-    name:    nameEl        ? nameEl.textContent.trim()           : "",
-    job:     jobEl         ? jobEl.textContent.trim()            : "",
-    phone:   contactEls[0] ? contactEls[0].textContent.trim()    : "",
-    email:   contactEls[1] ? contactEls[1].textContent.trim()    : "",
-    website: contactEls[2] ? contactEls[2].textContent.trim()    : "",
-  };
-
-  console.log("[saveProfile] payload =", payload);
-
-  try {
-    await setDoc(doc(db, "users", uid), payload, { merge: true });
-    alert("명함 정보가 저장되었습니다.");
-    console.log("[saveProfile] 저장 성공");
-  } catch (err) {
-    console.error("[saveProfile] 프로필 저장 오류:", err.code, err.message);
-    alert("저장 중 오류가 발생했습니다. (콘솔 확인)");
-  }
-}
-
-
-// ======================
-// 6. 초기 로딩 로직
-// ======================
-
 const urlUid = getUidFromUrl();
-
 if (urlUid) {
-  // ✅ QR로 들어온 경우: URL 에 uid/id 있으면 그걸 기준으로 로드
-  window.currentUid = urlUid;
   loadProfileByUid(urlUid);
 } else {
-  // ✅ URL에 uid/id 없으면 → 로그인 된 사람 기준으로 로드
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("[Auth] 로그인 감지, uid =", user.uid);
-      window.currentUid = user.uid;
-      loadProfileByUid(user.uid);
-    } else {
-      console.log("[Auth] 로그인 안 되어 있고, URL에도 uid/id 없음 → 기본값만 표시");
-    }
-  });
-}
-
-
-// ======================
-// 7. 저장 버튼 이벤트 (있을 때만)
-// ======================
-const saveBtn = document.getElementById("saveBtn");
-if (saveBtn) {
-  console.log("[DOM] saveBtn 감지 → 클릭 이벤트 바인딩");
-  saveBtn.addEventListener("click", saveProfile);
-} else {
-  console.log("[DOM] saveBtn 없음 (보기 전용 페이지일 수 있음)");
+  console.log("[card] URL에 uid/id가 없어서 아무 것도 로드하지 않음");
 }
