@@ -18,7 +18,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 console.log("[card] Firebase 초기화 완료");
 
@@ -113,3 +114,47 @@ if (urlUid) {
 } else {
   console.log("[card] URL에 uid/id가 없어서 아무 것도 로드하지 않음");
 }
+
+// ======================
+// 6. 친구 추가 기능
+// ======================
+
+async function addFriend(friendUid) {
+  const currentUser = auth.currentUser;
+  if (!currentUser) {
+    alert("로그인 후 친구 추가가 가능합니다.");
+    return;
+  }
+
+  const userRef = doc(db, "users", currentUser.uid);
+
+  try {
+    // 현재 사용자의 데이터를 가져옵니다
+    const userSnap = await getDoc(userRef);
+    const userData = userSnap.data();
+    const currentFriends = userData?.friends || [];
+
+    // 이미 친구가 아닌 경우, 친구 목록에 추가합니다
+    if (!currentFriends.includes(friendUid)) {
+      currentFriends.push(friendUid);
+      await setDoc(userRef, { friends: currentFriends }, { merge: true });
+      alert("친구가 추가되었습니다!");
+    } else {
+      alert("이미 친구 목록에 추가된 사용자입니다.");
+    }
+  } catch (err) {
+    console.error("친구 추가 실패:", err);
+  }
+}
+
+// ======================
+// 7. 버튼 클릭 시 친구 추가
+// ======================
+document.getElementById("btnSaveToApp").addEventListener("click", () => {
+  const friendUid = getUidFromUrl(); // QR 코드에서 `uid` 추출
+  if (friendUid) {
+    addFriend(friendUid); // 친구 추가 함수 호출
+  } else {
+    alert("친구 정보를 불러올 수 없습니다.");
+  }
+});

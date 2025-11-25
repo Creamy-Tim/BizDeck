@@ -29,5 +29,34 @@
         
         
     </div>
+    <script>
+        const logo1 = document.querySelector('.logo_1');
+        const logo2 = document.querySelector('.logo_2');
+        const logo3 = document.querySelector('.logo_3');
+
+        const offset = 0.45; // 끝나기 0.2초 전에 다음 실행
+
+        function startNextAnimation(currentEl, nextEl) {
+            const style = window.getComputedStyle(currentEl);
+            const duration = parseFloat(style.animationDuration);
+
+            setTimeout(() => {
+                nextEl.classList.add('animate');
+            }, (duration - offset) * 1000);
+        }
+
+        // 1 시작
+        logo1.classList.add('animate');
+
+        // 1 끝나기 0.2초 전에 2 시작
+        startNextAnimation(logo1, logo2);
+
+        // 2 끝나기 0.2초 전에 3 시작
+        logo2.addEventListener("animationstart", () => {
+            startNextAnimation(logo2, logo3);
+        });
+
+</script>
+
 </body>
 </html>
