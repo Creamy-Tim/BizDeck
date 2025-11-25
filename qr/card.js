@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// 👉 기본 명함 값 (HTML에도 이미 들어가 있지만, 참고용으로 보관)
+// 👉 기본 명함 값
 const DEFAULT_CARD = {
   name: "홍길동",
   title: "제품 디자이너",
@@ -29,7 +29,6 @@ const DEFAULT_CARD = {
 };
 
 // DOM 요소
-// DOM 요소
 const nameEl = document.querySelector(".my_name_text");
 const titleEl = document.querySelector(".my_job_text");
 
@@ -38,8 +37,20 @@ const contactEl = contactTextNodes[0];  // 전화
 const emailEl   = contactTextNodes[1];  // 이메일
 const websiteEl = contactTextNodes[2];  // 웹사이트
 
-// 🔹 프로필 불러오기
+// 🔍 URL에서 uid 읽어오기 (?uid=XXXX 형식 가정)
+function getUidFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const uid = params.get("uid");
+  return uid && uid.trim() !== "" ? uid.trim() : null;
+}
+
+// 🔹 프로필 불러오기 (파라미터로 uid를 받도록 유지)
 async function loadProfile(uid) {
+  if (!uid) {
+    console.log("loadProfile: uid가 없습니다.");
+    return;
+  }
+
   const ref = doc(db, "users", uid);
 
   try {
@@ -64,17 +75,17 @@ async function loadProfile(uid) {
 
     if (!hasOtherFields) {
       console.log("이메일만 있어서 기본 명함 유지");
-      // 필요하면 이메일만 교체하고 싶으면 여기에서:
+      // 필요하면 이메일만 바꾸고 싶으면 여기에서:
       // if (email) emailEl.textContent = email;
       return;
     }
 
     // 🔸 여기까지 왔다면: 명함 정보가 어느 정도 채워져 있는 상태 → 화면에 반영
-    nameEl.textContent = nickname || DEFAULT_CARD.name;
-    titleEl.textContent = title || DEFAULT_CARD.title;
-    contactEl.textContent = phone || DEFAULT_CARD.contact;
-    emailEl.textContent = email || DEFAULT_CARD.email;
-    websiteEl.textContent = website || DEFAULT_CARD.website;
+    nameEl.textContent    = nickname || DEFAULT_CARD.name;
+    titleEl.textContent   = title    || DEFAULT_CARD.title;
+    contactEl.textContent = phone    || DEFAULT_CARD.contact;
+    emailEl.textContent   = email    || DEFAULT_CARD.email;
+    websiteEl.textContent = website  || DEFAULT_CARD.website;
 
   } catch (err) {
     console.error("명함 불러오기 실패:", err.message);
@@ -82,7 +93,7 @@ async function loadProfile(uid) {
   }
 }
 
-// 🔹 명함 저장하기
+// 🔹 명함 저장하기 (로그인된 본인이 수정할 때용)
 async function saveProfile() {
   const user = auth.currentUser;
   if (!user) {
@@ -90,10 +101,10 @@ async function saveProfile() {
     return;
   }
 
-  const name = nameEl.textContent;
-  const title = titleEl.textContent;
+  const name    = nameEl.textContent;
+  const title   = titleEl.textContent;
   const contact = contactEl.textContent;
-  const email = emailEl.textContent;
+  const email   = emailEl.textContent;
   const website = websiteEl.textContent;
 
   const ref = doc(db, "users", user.uid);
@@ -122,15 +133,27 @@ async function saveProfile() {
   }
 }
 
-// 로그인 상태 바뀔 때 명함 자동 로드
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("명함 페이지 - 로그인 감지:", user.email);
-    loadProfile(user.uid);
-  } else {
-    console.log("명함 페이지 - 로그인 안 됨, 기본 명함 사용");
-  }
-});
+// ✅ 진입 시 로직
+const uidFromUrl = getUidFromUrl();
 
-// 저장 버튼 클릭 시
-document.getElementById("saveBtn").addEventListener("click", saveProfile);
+// 1) QR로 들어와서 ?uid=...가 있는 경우 → 로그인 여부 상관 없이 해당 uid의 명함 보여주기
+if (uidFromUrl) {
+  console.log("URL에서 uid 감지:", uidFromUrl);
+  loadProfile(uidFromUrl);
+} else {
+  // 2) URL에 uid가 없으면 → 로그인된 사용자 기준으로 명함 로드
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("명함 페이지 - 로그인 감지:", user.email);
+      loadProfile(user.uid);
+    } else {
+      console.log("명함 페이지 - 로그인 안 됨, 기본 명함 사용");
+    }
+  });
+}
+
+// 저장 버튼 클릭 시 (버튼이 있는 페이지에서만 동작하도록 방어 코드)
+const saveBtn = document.getElementById("saveBtn");
+if (saveBtn) {
+  saveBtn.addEventListener("click", saveProfile);
+}

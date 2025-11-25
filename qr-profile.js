@@ -92,7 +92,7 @@ async function handleSignUp() {
 
     setStatus("✅ 회원가입 완료! " + user.email);
     // 명함 페이지로 이동
-    window.location.href = "business-card.html";
+    window.location.href = "home.html";
   } catch (err) {
     setStatus("❌ 회원가입 실패: " + err.message);
   }
@@ -127,7 +127,7 @@ async function handleLogIn() {
     const user = userCredential.user;
 
     setStatus("✅ 로그인 성공: " + user.email);
-    window.location.href = "business-card.html";
+    window.location.href = "home.html";
   } catch (err) {
     setStatus("❌ 로그인 실패: " + err.message);
   }
