@@ -23,7 +23,7 @@
 }
 
 @font-face {
-  font-family: 'PangeaAfrikanTrial';
+  font-family: 'PangeaAfrikanTrial;';
   src: url('./assets/fonts/PangeaAfrikanTrial-SemiBold.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
