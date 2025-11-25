@@ -1,3 +1,9 @@
+// Firebase 모듈을 개별적으로 임포트
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
+
+
 // Firebase 초기화
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
