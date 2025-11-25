@@ -1,8 +1,8 @@
+
 // Firebase 모듈을 개별적으로 임포트
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
-
 
 // Firebase 초기화
 const firebaseConfig = {
@@ -14,9 +14,9 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID",
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
 // 🔹 친구들의 명함 데이터를 불러오는 함수
 async function loadFriendsProfile(userUid) {
@@ -91,58 +91,6 @@ card.innerHTML = `
 `;
 const cardsContainer = document.getElementById('cards-container');
 cardsContainer.appendChild(card);
-}
-
-// 🔹 명함 저장하기 함수
-async function saveProfile() {
-    const user = auth.currentUser;
-    if (!user) {
-        alert("로그인 후 수정 가능합니다.");
-        return;
-    }
-
-    const name = document.getElementById("nameEl").value;
-    const title = document.getElementById("titleEl").value;
-    const contact = document.getElementById("contactEl").value;
-    const email = document.getElementById("emailEl").value;
-    const website = document.getElementById("websiteEl").value;
-
-    const ref = db.collection("users").doc(user.uid);
-
-    console.log("Firestore에 저장할 데이터:", { name, title, contact, email, website });
-
-    try {
-        await ref.set(
-            {
-                nickname: name,
-                title: title,
-                phone: contact,
-                email: email,
-                website: website,
-            },
-            { merge: true }
-        );
-
-        console.log("명함이 저장되었습니다.");
-        loadProfiles();  // 저장 후 명함을 다시 불러옴
-    } catch (err) {
-        console.error("Firestore에 저장 실패:", err.message);
-    }
-}
-
-// 🔹 여러 명함 불러오기 함수
-async function loadProfiles() {
-    const usersRef = firebase.firestore().collection("users"); // 여러 명을 조회
-    try {
-        const querySnapshot = await usersRef.get();
-        querySnapshot.forEach(doc => {
-            const data = doc.data();
-            createCard(data);  // Firestore 데이터로 명함 생성
-        });
-    } catch (err) {
-        console.error("명함 불러오기 실패:", err.message);
-        alert("명함 불러오기 실패");
-    }
 }
 
 // 페이지가 로드될 때 친구 명함 불러오기
