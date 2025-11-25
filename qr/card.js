@@ -8,13 +8,13 @@ import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/fireb
 
 // ======================
 // 1. Firebase 초기화
-//    (⚠️ 반드시 콘솔에서 복붙한 값과 동일해야 함)
+//    (⚠️ 값은 Firebase 콘솔에서 복붙한 걸 그대로 써야 합니다.)
 // ======================
 const firebaseConfig = {
-  apiKey: "AIzaSyChGzlnFvC5D0K8EEMu1e8p5FG3FoJKa8",            // 실제 값
+  apiKey: "AIzaSyChGzlnFvC5vFhqxUQ5effl775sdDr1lBE",        // ← 콘솔 값으로 맞게 넣기
   authDomain: "bizdeck-9fae5.firebaseapp.com",
   projectId: "bizdeck-9fae5",
-  storageBucket: "bizdeck-9fae5.appspot.com",                   // 보통 *.appspot.com 형식
+  storageBucket: "bizdeck-9fae5.appspot.com",                // 보통 projectId + ".appspot.com" 형식 (콘솔에서 한 번만 확인)
   messagingSenderId: "947125248466",
   appId: "1:947125248466:web:15f0c0a2f4b0c3d7d2b5d1",
   measurementId: "G-RQH9ZC2XYZ"
@@ -33,24 +33,34 @@ console.log("[Firebase] 초기화 완료");
 const nameEl      = document.querySelector(".my_name_text");
 const jobEl       = document.querySelector(".my_job_text");
 const contactEls  = document.querySelectorAll(".contact_text_text");
-// contactEls[0] = phone, contactEls[1] = email, contactEls[2] = website (card.html 기준)
+// contactEls[0] = phone, contactEls[1] = email, contactEls[2] = website
 
 console.log("[DOM] nameEl:", !!nameEl, "| jobEl:", !!jobEl, "| contactEls length:", contactEls.length);
 
 
 // ======================
-// 3. URL 에서 UID 꺼내기
+// 3. URL 에서 UID 꺼내기 (uid / id 둘 다 지원)
 // ======================
 function getUidFromUrl() {
   try {
     const params = new URLSearchParams(window.location.search);
-    const uid = params.get("uid");
-    if (uid && uid.trim() !== "") {
+
+    const uidFromUid = params.get("uid");
+    const uidFromId  = params.get("id");   // QR 링크에서 사용하는 파라미터
+
+    const uid = (uidFromUid && uidFromUid.trim() !== "")
+      ? uidFromUid.trim()
+      : (uidFromId && uidFromId.trim() !== "")
+        ? uidFromId.trim()
+        : null;
+
+    if (uid) {
       console.log("[URL] uid 감지:", uid);
-      return uid.trim();
+      return uid;
+    } else {
+      console.log("[URL] uid / id 파라미터가 없습니다.");
+      return null;
     }
-    console.log("[URL] uid 파라미터 없음");
-    return null;
   } catch (e) {
     console.error("[URL] uid 파싱 실패:", e);
     return null;
@@ -70,7 +80,7 @@ async function loadProfileByUid(uid) {
   console.log("[loadProfileByUid] 호출, uid =", uid);
 
   try {
-    const ref  = doc(db, "users", uid);   // ⚠️ 컬렉션 이름 다르면 여기 수정
+    const ref  = doc(db, "users", uid);   // ← 컬렉션 이름이 다르면 여기 수정
     const snap = await getDoc(ref);
 
     console.log("[loadProfileByUid] snap.exists? =", snap.exists());
@@ -83,7 +93,7 @@ async function loadProfileByUid(uid) {
     const data = snap.data();
     console.log("[loadProfileByUid] 불러온 문서 데이터:", data);
 
-    // 🔹 필드명 여러 패턴 커버 (name / nickname / userName 등)
+    // 🔹 필드명 여러 패턴 커버 (실제 Firestore 필드명에 맞게 추가/수정 가능)
     const displayName   = data.name    || data.nickname || data.userName || "";
     const displayJob    = data.job     || data.title    || data.major    || "";
     const displayPhone  = data.phone   || data.tel      || data.contact  || "";
@@ -118,11 +128,11 @@ async function saveProfile() {
   console.log("[saveProfile] 저장 시도, uid =", uid);
 
   const payload = {
-    name:    nameEl      ? nameEl.textContent.trim()         : "",
-    job:     jobEl       ? jobEl.textContent.trim()          : "",
-    phone:   contactEls[0] ? contactEls[0].textContent.trim() : "",
-    email:   contactEls[1] ? contactEls[1].textContent.trim() : "",
-    website: contactEls[2] ? contactEls[2].textContent.trim() : "",
+    name:    nameEl        ? nameEl.textContent.trim()           : "",
+    job:     jobEl         ? jobEl.textContent.trim()            : "",
+    phone:   contactEls[0] ? contactEls[0].textContent.trim()    : "",
+    email:   contactEls[1] ? contactEls[1].textContent.trim()    : "",
+    website: contactEls[2] ? contactEls[2].textContent.trim()    : "",
   };
 
   console.log("[saveProfile] payload =", payload);
@@ -145,18 +155,18 @@ async function saveProfile() {
 const urlUid = getUidFromUrl();
 
 if (urlUid) {
-  // ✅ QR로 들어온 경우: URL 에 ?uid=... 가 있으면 그걸 기준으로 로드
-  window.currentUid = urlUid;   // (QR 재생성 시에도 사용 가능)
+  // ✅ QR로 들어온 경우: URL 에 uid/id 있으면 그걸 기준으로 로드
+  window.currentUid = urlUid;
   loadProfileByUid(urlUid);
 } else {
-  // ✅ URL에 uid가 없으면 → 로그인 된 사람 기준으로 로드
+  // ✅ URL에 uid/id 없으면 → 로그인 된 사람 기준으로 로드
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("[Auth] 로그인 감지, uid =", user.uid);
       window.currentUid = user.uid;
       loadProfileByUid(user.uid);
     } else {
-      console.log("[Auth] 로그인 안 되어 있고, URL에도 uid 없음 → 기본값 그대로 표시");
+      console.log("[Auth] 로그인 안 되어 있고, URL에도 uid/id 없음 → 기본값만 표시");
     }
   });
 }
