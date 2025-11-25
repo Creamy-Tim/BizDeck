@@ -16,7 +16,6 @@ const auth = firebase.auth();
 // 친구들의 명함 데이터를 불러오는 함수
 async function loadFriendsProfile(userUid) {
   try {
-    // 1. 현재 사용자의 friends 목록을 가져오기
     const userRef = doc(db, "users", userUid);
     const userSnap = await getDoc(userRef);
 
@@ -26,7 +25,10 @@ async function loadFriendsProfile(userUid) {
     }
 
     const userData = userSnap.data();
-    const friendUids = userData.friends;  // 친구들의 UID 배열
+    const friendUids = userData.friend || [];  // 친구들의 UID 배열
+
+    // 친구들의 데이터가 제대로 불러와졌는지 확인
+    console.log("친구들의 UID 배열:", friendUids);
 
     // 2. 친구들의 데이터를 가져오기
     const friendsData = [];
@@ -37,10 +39,15 @@ async function loadFriendsProfile(userUid) {
 
       if (friendSnap.exists()) {
         friendsData.push(friendSnap.data());  // 친구 데이터 저장
+      } else {
+        console.log(`${friendUid} 의 데이터가 존재하지 않습니다.`);
       }
     }
 
     // 3. 친구들의 데이터를 화면에 반영
+    if (friendsData.length === 0) {
+      console.log("친구 명함 데이터가 없습니다.");
+    }
     friendsData.forEach(friend => {
       createCard(friend);  // createCard 함수로 동적으로 명함 생성
     });
@@ -50,6 +57,7 @@ async function loadFriendsProfile(userUid) {
     alert("친구 명함 불러오기 실패");
   }
 }
+
 
 
 // 명함 추가 함수
