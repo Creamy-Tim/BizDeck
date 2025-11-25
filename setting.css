@@ -1,11 +1,11 @@
 .back_button {
-  width: 56px;
-  height: 32px;
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #000000;
-  position: absolute;
-  right: 15px;
+    width: 56px;
+    height: 32px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #000000;
+    position: absolute;
+    right: 15px;
 }
 
 .back_button:hover {
