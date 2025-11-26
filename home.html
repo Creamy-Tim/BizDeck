@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- QR 영역 -->
-                <div id="qrArea"></div>
+                <div id="qrArea" onclick="movePage()"></div>
 
             </div>
             <p class="card_list_title">Recent watched</p>
@@ -159,6 +159,10 @@
           const uId    = currentUser.uid;
           const qrText = CARD_PAGE_URL + "?id=" + encodeURIComponent(uId);
           console.log("QR 생성 URL:", qrText);
+
+          document.getElementById("qrArea").addEventListener("click", function() {
+                window.location.href = qrText;
+          });
 
           // 화면 전환
           card.style.display    = 'none';
