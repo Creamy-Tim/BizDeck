@@ -63,7 +63,7 @@
     display: none; /* Chrome, Safari */
 }
 
-.namecard_making{
+.namecard_making {
     width: 120px;
     height: 80px;
     flex-shrink: 0;
@@ -73,6 +73,7 @@
     border: 1px solid #141414;
     margin-left: 8px;
     position: relative;
+    cursor: pointer;
 }
 
 .elements1{
@@ -96,17 +97,6 @@
     margin-top: 8px;
     margin-left: 4px;
   }
-
-.elements2{
-    width: 57.5px;
-    height: 25px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    border: 1px solid #959595;
-    background: #616161;
-    margin-top: 8px;
-    margin-left: 4px;
-}
 
 .elements3{
     width: 30px;
@@ -147,6 +137,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.style_box_choice {
+  border-width: 3px;
 }
 
 .style_text, .size_text {
@@ -215,6 +211,7 @@
   border-radius: 4px;
   position: relative;
   margin: 0 4px 4px 0;
+  cursor: pointer;
 }
 
 .save_button {
@@ -229,8 +226,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
+
+
+/* 스타일링 선택시 속성 */
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
 
 
 

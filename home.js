@@ -49,10 +49,25 @@ async function loadProfile(uid) {
       return; // 아무것도 안 바꿈 → 기본 값 그대로
     }
 
-    const data = docSnap.data();
-    console.log("불러온 데이터:", data);
+    const userData = docSnap.data();  // Firestore에서 가져온 사용자 데이터
+    console.log("불러온 데이터:", userData);
 
-    const { nickname, title, phone, email, website } = data;
+    const { nickname, title, phone, email, website, isItalic, isBold, isUnderline, isUppercase } = userData;
+
+    // 텍스트에 스타일 적용 (예: .text_item 클래스를 가진 요소들)
+    document.querySelectorAll('.text_item').forEach(textElement => {
+      if (isItalic) textElement.style.fontStyle = 'italic';
+      else textElement.style.fontStyle = 'normal';
+
+      if (isBold) textElement.style.fontWeight = 'bold';
+      else textElement.style.fontWeight = 'normal';
+
+      if (isUnderline) textElement.style.textDecoration = 'underline';
+      else textElement.style.textDecoration = 'none';
+
+      if (isUppercase) textElement.style.textTransform = 'uppercase';
+      else textElement.style.textTransform = 'none';
+    });
 
     // 이메일 말고 다른 값이 하나라도 있는지 체크
     const hasOtherFields =
@@ -64,7 +79,7 @@ async function loadProfile(uid) {
     if (!hasOtherFields) {
       console.log("이메일만 있어서 기본 명함 유지");
       // 필요하면 이메일만 교체하고 싶으면 여기에서:
-      // if (email) emailEl.textContent = email;
+      if (email) emailEl.textContent = email;
       return;
     }
 
@@ -80,6 +95,7 @@ async function loadProfile(uid) {
     alert("명함 불러오기 실패");
   }
 }
+
 
 // 🔹 명함 저장하기
 async function saveProfile() {
