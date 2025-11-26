@@ -86,11 +86,11 @@
 
 <!-- QRCode.js: QR 다운로드용 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script type="module" src="card.js"></script>
-<script type="module" src="home.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js"></script>
+<script type="module" src="../card.js"></script>
+<script type="module" src="../home.js"></script>
 
 <script type="module">
-    import { getAuth } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
     import { doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
     
     // 4️⃣ QR 다운로드(현재 명함 페이지 URL 기준)
