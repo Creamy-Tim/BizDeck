@@ -52,7 +52,7 @@ async function loadProfile(uid) {
     const userData = docSnap.data();  // Firestore에서 가져온 사용자 데이터
     console.log("불러온 데이터:", userData);
 
-    const { nickname, title, phone, email, website, isItalic, isBold, isUnderline, isUppercase } = userData;
+    const { nickname, title, phone, email, website, isItalic, isBold, isUnderline, isUppercase, fontSize } = userData;
 
     // 텍스트에 스타일 적용 (예: .text_item 클래스를 가진 요소들)
     document.querySelectorAll('.text_item').forEach(textElement => {
@@ -68,6 +68,34 @@ async function loadProfile(uid) {
       if (isUppercase) textElement.style.textTransform = 'uppercase';
       else textElement.style.textTransform = 'none';
     });
+
+    const data = docSnap.data();
+    const font_size = data.fontSize || 0; // 저장된 폰트 크기 값 가져오기 (기본값: 0)
+
+    console.log("불러온 폰트 크기:", font_size);
+
+    // 폰트 크기 적용 함수
+    applyFontSize(font_size);
+
+    // 폰트 크기 적용
+    function applyFontSize(font_size) {
+      // 텍스트 요소를 선택
+      const textElements = document.querySelectorAll('.text_item');
+
+      // 각 텍스트 요소에 폰트 크기 적용
+      textElements.forEach(textElement => {
+        // 기존 폰트 크기를 가져오고, 폰트 크기를 계산하여 덧붙이기
+        const currentFontSize = window.getComputedStyle(textElement).fontSize;
+        const currentFontSizeValue = parseInt(currentFontSize); // 기존 폰트 크기 (px 단위)
+
+        // 폰트 크기 계산 (기존 값에 가져온 font_size를 더함)
+        const newFontSize = currentFontSizeValue + fontSize;
+
+        // 폰트 크기 업데이트
+        textElement.style.fontSize = `${newFontSize}px`;
+      });
+    }
+
 
     // 이메일 말고 다른 값이 하나라도 있는지 체크
     const hasOtherFields =

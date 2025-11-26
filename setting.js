@@ -44,6 +44,9 @@ document.getElementById('saveButton').addEventListener('click', async () => {
     const isItalic = document.querySelector('.style_button[data_style="italic"]').classList.contains('style_box_choice');
     const isUnderline = document.querySelector('.style_button[data_style="underline"]').classList.contains('style_box_choice');
 
+    // 폰트 크기 정보
+    const fontSize = getFontSizeFromActiveButton();
+
     // 필수 항목 체크
     if (name.trim() === "") {
         alert("이름을 입력해주세요.");
@@ -86,7 +89,9 @@ document.getElementById('saveButton').addEventListener('click', async () => {
             isUppercase: isUppercase,
             isBold: isBold,
             isItalic: isItalic,
-            isUnderline: isUnderline
+            isUnderline: isUnderline,
+
+            fontSize: fontSize
         });
 
         console.log("변경사항이 성공적으로 저장되었습니다.");
@@ -137,3 +142,29 @@ buttons.forEach(button => {
         });
     });
 });
+
+
+// 폰트 사이즈 버튼 선택
+const size_button = document.querySelectorAll('.size_button');
+
+// 버튼 클릭 시 해당 버튼에 'active' 클래스 토글
+size_button.forEach(button => {
+    button.addEventListener('click', () => {
+        // 클릭된 버튼에 active 클래스를 추가
+        size_button.forEach(btn => btn.classList.remove('active'));  // 모든 버튼에서 'active' 제거
+        button.classList.add('active');  // 클릭된 버튼에 'active' 추가
+
+        // 여기에 원하는 스타일을 적용할 수 있습니다.
+        // 예를 들어, 스타일 변경을 위한 클래스 토글 코드 작성
+    });
+});
+
+
+// 폰트 사이즈 선택 함수
+function getFontSizeFromActiveButton() {
+  const activeButton = document.querySelector('.size_button.active');  // 'active' 클래스를 가진 버튼 찾기
+  if (activeButton) {
+   return parseInt(activeButton.getAttribute('data_style'));  // active 버튼의 data_style 속성값 가져오기
+  }
+  return null;  // 아무 버튼도 선택되지 않으면 null 반환
+}
