@@ -47,6 +47,9 @@ document.getElementById('saveButton').addEventListener('click', async () => {
     // 폰트 크기 정보
     const fontSize = getFontSizeFromActiveButton();
 
+    // 명함 배경 색 정보
+    const card_color = getCardSizeFromActiveButton();
+
     // 필수 항목 체크
     if (name.trim() === "") {
         alert("이름을 입력해주세요.");
@@ -91,7 +94,9 @@ document.getElementById('saveButton').addEventListener('click', async () => {
             isItalic: isItalic,
             isUnderline: isUnderline,
 
-            fontSize: fontSize
+            fontSize: fontSize,
+
+            card_color: card_color
         });
 
         console.log("변경사항이 성공적으로 저장되었습니다.");
@@ -165,6 +170,33 @@ function getFontSizeFromActiveButton() {
   const activeButton = document.querySelector('.size_button.active');  // 'active' 클래스를 가진 버튼 찾기
   if (activeButton) {
    return parseInt(activeButton.getAttribute('data_style'));  // active 버튼의 data_style 속성값 가져오기
+  }
+  return null;  // 아무 버튼도 선택되지 않으면 null 반환
+}
+
+
+
+// 명함 배경색 버튼 선택
+const colorButtons = document.querySelectorAll('.palette_color');
+
+// 버튼 클릭 시 해당 버튼에 'active' 클래스 토글
+colorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // 클릭된 버튼에 active 클래스를 추가
+        colorButtons.forEach(btn => btn.classList.remove('active'));  // 모든 버튼에서 'active' 제거
+        button.classList.add('active');  // 클릭된 버튼에 'active' 추가
+
+        // 여기에 원하는 스타일을 적용할 수 있습니다.
+        // 예를 들어, 스타일 변경을 위한 클래스 토글 코드 작성
+    });
+});
+
+
+// 명함 배경색 선택 함수
+function getCardSizeFromActiveButton() {
+  const activeButton = document.querySelector('.palette_color.active');  // 'active' 클래스를 가진 버튼 찾기
+  if (activeButton) {
+   return activeButton.getAttribute('data_color');  // active 버튼의 data_color 속성값 가져오기
   }
   return null;  // 아무 버튼도 선택되지 않으면 null 반환
 }

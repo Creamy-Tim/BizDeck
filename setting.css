@@ -216,6 +216,12 @@
   position: relative;
   margin: 0 4px 4px 0;
   cursor: pointer;
+  box-sizing: border-box;
+}
+
+.palette_color.active {
+  width: 24px;
+  height: 24px;
 }
 
 .save_button {

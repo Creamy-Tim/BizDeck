@@ -52,7 +52,7 @@ async function loadProfile(uid) {
     const userData = docSnap.data();  // Firestore에서 가져온 사용자 데이터
     console.log("불러온 데이터:", userData);
 
-    const { nickname, title, phone, email, website, isItalic, isBold, isUnderline, isUppercase, fontSize } = userData;
+    const { nickname, title, phone, email, website, isItalic, isBold, isUnderline, isUppercase, fontSize, card_color } = userData;
 
     // 텍스트에 스타일 적용 (예: .text_item 클래스를 가진 요소들)
     document.querySelectorAll('.text_item').forEach(textElement => {
@@ -95,6 +95,16 @@ async function loadProfile(uid) {
         textElement.style.fontSize = `${newFontSize}px`;
       });
     }
+
+    // 프로필 로드 (색상 값 포함)
+    const card_background_color = data.card_color || "#FE5858";  // 저장된 색상 값 가져오기 (기본값: 분홍색)
+
+    console.log("불러온 색상 값:", card_background_color);
+
+    // 색상 값을 적용할 텍스트 요소 선택
+    document.querySelectorAll('.my_card').forEach(textElement => {
+      textElement.style.background = card_background_color;  // 저장된 색상 값 적용
+    });
 
 
     // 이메일 말고 다른 값이 하나라도 있는지 체크
