@@ -49,10 +49,63 @@ async function loadProfile(uid) {
       return; // 아무것도 안 바꿈 → 기본 값 그대로
     }
 
-    const data = docSnap.data();
-    console.log("불러온 데이터:", data);
+    const userData = docSnap.data();  // Firestore에서 가져온 사용자 데이터
+    console.log("불러온 데이터:", userData);
 
-    const { nickname, title, phone, email, website } = data;
+    const { nickname, title, phone, email, website, isItalic, isBold, isUnderline, isUppercase, fontSize, card_color } = userData;
+
+    // 텍스트에 스타일 적용 (예: .text_item 클래스를 가진 요소들)
+    document.querySelectorAll('.text_item').forEach(textElement => {
+      if (isItalic) textElement.style.fontStyle = 'italic';
+      else textElement.style.fontStyle = 'normal';
+
+      if (isBold) textElement.style.fontWeight = 'bold';
+      else textElement.style.fontWeight = 'normal';
+
+      if (isUnderline) textElement.style.textDecoration = 'underline';
+      else textElement.style.textDecoration = 'none';
+
+      if (isUppercase) textElement.style.textTransform = 'uppercase';
+      else textElement.style.textTransform = 'none';
+    });
+
+    const data = docSnap.data();
+    const font_size = data.fontSize || 0; // 저장된 폰트 크기 값 가져오기 (기본값: 0)
+
+    console.log("불러온 폰트 크기:", font_size);
+
+    // 폰트 크기 적용 함수
+    applyFontSize(font_size);
+
+    // 폰트 크기 적용
+    function applyFontSize(font_size) {
+      // 텍스트 요소를 선택
+      const textElements = document.querySelectorAll('.text_item');
+
+      // 각 텍스트 요소에 폰트 크기 적용
+      textElements.forEach(textElement => {
+        // 기존 폰트 크기를 가져오고, 폰트 크기를 계산하여 덧붙이기
+        const currentFontSize = window.getComputedStyle(textElement).fontSize;
+        const currentFontSizeValue = parseInt(currentFontSize); // 기존 폰트 크기 (px 단위)
+
+        // 폰트 크기 계산 (기존 값에 가져온 font_size를 더함)
+        const newFontSize = currentFontSizeValue + fontSize;
+
+        // 폰트 크기 업데이트
+        textElement.style.fontSize = `${newFontSize}px`;
+      });
+    }
+
+    // 프로필 로드 (색상 값 포함)
+    const card_background_color = data.card_color || "#FE5858";  // 저장된 색상 값 가져오기 (기본값: 분홍색)
+
+    console.log("불러온 색상 값:", card_background_color);
+
+    // 색상 값을 적용할 텍스트 요소 선택
+    document.querySelectorAll('.my_card').forEach(textElement => {
+      textElement.style.background = card_background_color;  // 저장된 색상 값 적용
+    });
+
 
     // 이메일 말고 다른 값이 하나라도 있는지 체크
     const hasOtherFields =
@@ -64,7 +117,7 @@ async function loadProfile(uid) {
     if (!hasOtherFields) {
       console.log("이메일만 있어서 기본 명함 유지");
       // 필요하면 이메일만 교체하고 싶으면 여기에서:
-      // if (email) emailEl.textContent = email;
+      if (email) emailEl.textContent = email;
       return;
     }
 
@@ -80,6 +133,7 @@ async function loadProfile(uid) {
     alert("명함 불러오기 실패");
   }
 }
+
 
 // 🔹 명함 저장하기
 async function saveProfile() {

@@ -9,9 +9,53 @@
 
 .card_list {
     width: 360px;
-    height: auto;
+    height: 600px;
     margin: 24px auto 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 
+.my_card {
+  width: 343px;
+  height: 220px;
+  background-color: #FB1CFF;
+  border-radius: 16px;
+  position: relative;
+  margin-top: 8px;
+}
+
+.my_name, .my_job, .contact_text, .logo {
+    border-style: none;
+}
+
+.my_name_text, .my_job_text, .contact_text_text {
+    font-family: "Spartan MB";
+    font-style: normal;
+    color: #000000;
+    margin: 0;
+}
+
+.my_name_text {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.my_job_text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.contact_text_text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.logo_img {
+    width: auto;
+    height: 50px;
+    position: absolute;
+    right: 0px;
 }
 
 /* 다른 css 속성은 component.css */
