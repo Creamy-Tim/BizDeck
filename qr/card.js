@@ -48,10 +48,11 @@ console.log("[card] DOM:",
 // ======================
 // 3. URL에서 uid(id) 읽기
 // ======================
+// URL에서 카드 주인의 UID 가져오기 (?id=... 혹은 ?uid=...)
 function getUidFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const uidFromUid = params.get("uid");
-  const uidFromId  = params.get("id");   // QR에서 사용하는 파라미터
+  const uidFromId  = params.get("id");
 
   const uid = (uidFromUid && uidFromUid.trim() !== "")
     ? uidFromUid.trim()
@@ -59,43 +60,33 @@ function getUidFromUrl() {
       ? uidFromId.trim()
       : null;
 
-  if (uid) {
-    console.log("[card] URL에서 uid 감지:", uid);
-    return uid;
-  } else {
-    console.log("[card] uid/id 파라미터 없음");
-    return null;
-  }
+  return uid;
 }
 
 // ======================
 // 4. Firestore에서 프로필 불러오기
 // ======================
-async function loadProfileByUid(uid) {
-  if (!uid) {
-    console.log("[card] uid 없음 → 로드 중단");
-    return;
-  }
+const cardOwnerUid = getUidFromUrl();   // ✅ 카드 주인 UID (A)
 
-  console.log("[card] Firestore 로드 시도, uid =", uid);
+if (!cardOwnerUid) {
+  console.error("URL에서 uid/id를 찾을 수 없습니다.");
+  // 여기서는 에러 문구만 띄우고 끝내도 됨
+}
 
+// 카드(명함) 정보 불러오기
+async function loadCard(ownerUid) {
   try {
-    // 컬렉션 이름: users (스크린샷과 동일)
-    const ref  = doc(db, "users", uid);
-    const snap = await getDoc(ref);
+    const cardRef = doc(db, "users", ownerUid);
+    const cardSnap = await getDoc(cardRef);
 
-    console.log("[card] snap.exists? =", snap.exists());
-
-    if (!snap.exists()) {
-      console.log("[card] 해당 uid 문서가 없습니다:", uid);
+    if (!cardSnap.exists()) {
+      console.error("해당 UID의 명함 데이터를 찾을 수 없습니다.");
       return;
     }
 
-    const data = snap.data();
-    console.log("[card] 불러온 데이터:", data);
+    const data = cardSnap.data();
 
-    // 🔹 Firestore 필드명에 1:1로 맞춤
-    const displayName  = data.nickname || "";
+    const displayName  = data.nickname || data.name || "";
     const displayJob   = data.title    || "";
     const displayPhone = data.phone    || "";
     const displayEmail = data.email    || "";
@@ -109,26 +100,21 @@ async function loadProfileByUid(uid) {
     if (contactEls[2]) contactEls[2].textContent = displaySite  || "웹사이트 없음";
 
   } catch (err) {
-    console.error("[card] 프로필 로드 오류:", err.code, err.message);
+    console.error("카드 정보 로드 실패:", err);
   }
 }
 
-// ======================
-// 5. 초기 실행
-// ======================
-const urlUid = getUidFromUrl();
-if (urlUid) {
-  loadProfileByUid(urlUid);
-} else {
-  console.log("[card] URL에 uid/id가 없어서 아무 것도 로드하지 않음");
+// 페이지 로드 시, 카드 주인 기준으로 명함 보여주기
+if (cardOwnerUid) {
+  loadCard(cardOwnerUid);
 }
 
 // ======================
-// 6. 친구 추가 기능
+// 5. 친구 추가 기능
 // ======================
 
 async function addFriend(friendUid) {
-  const currentUser = auth.currentUser;
+  const currentUser = auth.currentUser; // ✅ B
 
   if (!currentUser) {
     alert("로그인 후 친구 추가가 가능합니다.");
@@ -140,20 +126,17 @@ async function addFriend(friendUid) {
     return;
   }
 
-  const userRef = doc(db, "users", currentUser.uid);
+  const viewerRef = doc(db, "users", currentUser.uid);  // ✅ B 문서
 
   try {
-    // friends: [friendUid, ...] 형태의 배열 필드에 안전하게 추가
     await setDoc(
-      userRef,
+      viewerRef,
       {
-        friends: arrayUnion(friendUid),
+        friends: arrayUnion(friendUid),  // ✅ A를 B의 friends에 추가
       },
       { merge: true }
     );
-
     alert("친구로 등록되었습니다!");
-    console.log("친구 UID 추가 완료:", friendUid);
   } catch (err) {
     console.error("친구 추가 실패:", err);
     alert("친구 추가 실패: " + err.message);
@@ -162,18 +145,17 @@ async function addFriend(friendUid) {
 
 
 // ======================
-// 7. 버튼 클릭 시 친구 추가
+// 6. 버튼 클릭 시 친구 추가
 // ======================
 
+// 버튼 클릭 시: 항상 “이 카드의 주인(cardOwnerUid)”를 친구로 추가
 const saveBtn = document.getElementById("btnSaveToApp");
-
 if (saveBtn) {
   saveBtn.addEventListener("click", () => {
-    const friendUid = getUidFromUrl();  // 카드 URL에 붙은 ?id=... 또는 ?uid=...
-    if (!friendUid) {
+    if (!cardOwnerUid) {
       alert("친구 정보를 불러올 수 없습니다.");
       return;
     }
-    addFriend(friendUid);               // 현재 로그인 유저의 friends에 추가
+    addFriend(cardOwnerUid);
   });
 }
