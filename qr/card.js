@@ -2,7 +2,15 @@
 // 0. Firebase SDK 모듈 가져오기 (CDN 버전)
 // ======================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  arrayUnion,
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
 
 // ======================
 // 1. Firebase 초기화
@@ -121,40 +129,51 @@ if (urlUid) {
 
 async function addFriend(friendUid) {
   const currentUser = auth.currentUser;
+
   if (!currentUser) {
     alert("로그인 후 친구 추가가 가능합니다.");
+    return;
+  }
+
+  if (!friendUid) {
+    alert("친구 UID를 찾을 수 없습니다.");
     return;
   }
 
   const userRef = doc(db, "users", currentUser.uid);
 
   try {
-    // 현재 사용자의 데이터를 가져옵니다
-    const userSnap = await getDoc(userRef);
-    const userData = userSnap.data();
-    const currentFriends = userData?.friends || [];
+    // friends: [friendUid, ...] 형태의 배열 필드에 안전하게 추가
+    await setDoc(
+      userRef,
+      {
+        friends: arrayUnion(friendUid),
+      },
+      { merge: true }
+    );
 
-    // 이미 친구가 아닌 경우, 친구 목록에 추가합니다
-    if (!currentFriends.includes(friendUid)) {
-      currentFriends.push(friendUid);
-      await setDoc(userRef, { friends: currentFriends }, { merge: true });
-      alert("친구가 추가되었습니다!");
-    } else {
-      alert("이미 친구 목록에 추가된 사용자입니다.");
-    }
+    alert("친구로 등록되었습니다!");
+    console.log("친구 UID 추가 완료:", friendUid);
   } catch (err) {
     console.error("친구 추가 실패:", err);
+    alert("친구 추가 실패: " + err.message);
   }
 }
+
 
 // ======================
 // 7. 버튼 클릭 시 친구 추가
 // ======================
-document.getElementById("btnSaveToApp").addEventListener("click", () => {
-  const friendUid = getUidFromUrl(); // QR 코드에서 `uid` 추출
-  if (friendUid) {
-    addFriend(friendUid); // 친구 추가 함수 호출
-  } else {
-    alert("친구 정보를 불러올 수 없습니다.");
-  }
-});
+
+const saveBtn = document.getElementById("btnSaveToApp");
+
+if (saveBtn) {
+  saveBtn.addEventListener("click", () => {
+    const friendUid = getUidFromUrl();  // 카드 URL에 붙은 ?id=... 또는 ?uid=...
+    if (!friendUid) {
+      alert("친구 정보를 불러올 수 없습니다.");
+      return;
+    }
+    addFriend(friendUid);               // 현재 로그인 유저의 friends에 추가
+  });
+}
