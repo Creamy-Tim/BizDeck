@@ -93,7 +93,7 @@ function createCard(friendUid, { nickname, name, title, phone, email, website, c
 
     const card = document.createElement('div');
     card.classList.add('my_card');
-    card.onclick = () => openDetail(userUid);
+    card.onclick = () => openDetail(friendUid);
 
     card.innerHTML = `
         <div class="my_name">
