@@ -9,18 +9,18 @@
 </head>
 <body>
     <div class="phone">
-        <div class="logo_case">
-            <img src="./assets/img/logo_1.svg" class="logo_1" alt="BIZ">
-            <img src="./assets/img/logo_2.svg" class="logo_2" alt="DE">
-            <img src="./assets/img/logo_3.svg" class="logo_3" alt="CK">
-        </div>
         <div class="onboarding_text_case">
-            <p class="onboarding_text">POCKET</p>
-            <p class="onboarding_text">YOUR</p>
-            <p class="onboarding_text">NETWORK</p>
-            <p class="onboarding_text">OWN THE</p>
-            <p class="onboarding_text">ROOM</p>
+            <p class="onboarding_text">CARDS IN</p>
+            <p class="onboarding_text">SYNC.</p>
+            <p class="onboarding_text">CONNECTIONS</p>
+            <p class="onboarding_text">IN MOTION.</p>
         </div>
+        <div class="logo_case">
+            <img src="./assets/img/logo_row_3.svg" class="logo_1" alt="BIZ">
+            <img src="./assets/img/logo_row_2.svg" class="logo_2" alt="DE">
+            <img src="./assets/img/logo_row_1.svg" class="logo_3" alt="CK">
+        </div>
+
         
         <a href="login.html">
             <button class="next_button">next</button>
@@ -28,5 +28,33 @@
         
         
     </div>
+    <script>
+        const logo1 = document.querySelector('.logo_3');
+        const logo2 = document.querySelector('.logo_2');
+        const logo3 = document.querySelector('.logo_1');
+
+        const offset = 0.45; // 끝나기 0.2초 전에 다음 실행
+
+        function startNextAnimation(currentEl, nextEl) {
+            const style = window.getComputedStyle(currentEl);
+            const duration = parseFloat(style.animationDuration);
+
+            setTimeout(() => {
+                nextEl.classList.add('animate');
+            }, (duration - offset) * 1000);
+        }
+
+        // 1 시작
+        logo1.classList.add('animate');
+
+        // 1 끝나기 0.2초 전에 2 시작
+        startNextAnimation(logo1, logo2);
+
+        // 2 끝나기 0.2초 전에 3 시작
+        logo2.addEventListener("animationstart", () => {
+            startNextAnimation(logo2, logo3);
+        });
+
+    </script>
 </body>
 </html>

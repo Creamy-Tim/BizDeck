@@ -31,89 +31,51 @@ onAuthStateChanged(auth, (user) => {
 
 // Firebase Firestore에 텍스트 저장하기
 document.getElementById('saveButton').addEventListener('click', async () => {
-    // 입력값 가져오기
-    const name = document.getElementById('my_name').value;
-    const job = document.getElementById('my_job').value;
-    const phone = document.getElementById('phone_number').value;
-    const email = document.getElementById('email').value;
-    const website = document.getElementById('website').value;
+  const name  = document.getElementById('my_name').value;
+  const job   = document.getElementById('my_job').value;
+  const phone = document.getElementById('phone_number').value;
+  const email = document.getElementById('email').value;
+  const website = document.getElementById('website').value;
 
-    // 스타일 정보 (예시: 굵기, 기울기, 밑줄)
-    const isUppercase = document.querySelector('.style_button[data_style="uppercase"]').classList.contains('style_box_choice');
-    const isBold = document.querySelector('.style_button[data_style="bold"]').classList.contains('style_box_choice');
-    const isItalic = document.querySelector('.style_button[data_style="italic"]').classList.contains('style_box_choice');
-    const isUnderline = document.querySelector('.style_button[data_style="underline"]').classList.contains('style_box_choice');
+  if (!name.trim())  { alert("이름을 입력해주세요."); return; }
+  if (!job.trim())   { alert("직업을 입력해주세요."); return; }
+  if (!phone.trim()) { alert("전화번호를 입력해주세요."); return; }
+  if (!email.trim()) { alert("이메일을 입력해주세요."); return; }
 
-    // 폰트 크기 정보
-    const fontSize = getFontSizeFromActiveButton();
+  const user = auth.currentUser;
+  if (!user) {
+    alert("로그인 후 프로필을 수정할 수 있습니다.");
+    return;
+  }
 
-    // 명함 배경 색 정보
-    const card_color = getCardSizeFromActiveButton();
+  const btn = document.getElementById('saveButton');
+  btn.disabled = true;  // 중복 클릭 방지
 
-    // 필수 항목 체크
-    if (name.trim() === "") {
-        alert("이름을 입력해주세요.");
-        return;
-    } else if (job.trim() === "") {
-        alert("직업을 입력해주세요.");
-        return;
-    } else if (phone.trim() === "") {
-        alert("전화번호를 입력해주세요.");
-        return;
-    } else if (email.trim() === "") {
-        alert("이메일을 입력해주세요.");
-        return;
-    }
+  try {
+    await setDoc(doc(db, "users", user.uid), {
+      nickname: name,
+      title: job,
+      phone,
+      email,
+      website,
+      // 스타일이나 기타 데이터
+      isUppercase,
+      isBold,
+      isItalic,
+      isUnderline,
+      fontSize,
+      card_color,
+      timestamp: new Date()
+    });
 
-    // 현재 로그인된 사용자의 UID 가져오기
-    const user = auth.currentUser;
-
-    if (!user) {
-        alert("로그인 후 프로필을 수정할 수 있습니다.");
-        return;
-    }
-
-    const userUid = user.uid; // 로그인된 사용자의 UID
-
-    // Firestore에 데이터 저장하기
-    try {
-        // 데이터를 저장할 문서 참조 (각 사용자 문서는 UID로 저장)
-        const docRef = doc(db, "users", userUid); // "users" 컬렉션에 사용자의 UID를 문서 ID로 사용
-
-        // 사용자 데이터 저장
-        await setDoc(docRef, {
-            nickname: name,
-            title: job,
-            phone: phone,
-            email: email,
-            website: website,
-            timestamp: new Date(), // 저장 시각
-
-            isUppercase: isUppercase,
-            isBold: isBold,
-            isItalic: isItalic,
-            isUnderline: isUnderline,
-
-            fontSize: fontSize,
-
-            card_color: card_color
-        });
-
-        console.log("변경사항이 성공적으로 저장되었습니다.");
-
-        // 입력 필드 초기화
-        document.getElementById('my_name').value = "";
-        document.getElementById('my_job').value = "";
-        document.getElementById('phone_number').value = "";
-        document.getElementById('email').value = "";
-        document.getElementById('website').value = "";
-
-    } catch (error) {
-        console.error("변경사항 저장 실패:", error);
-        alert("변경사항 저장 실패");
-    }
+    console.log("변경사항이 성공적으로 저장되었습니다.");
+    window.location.href = 'home.html';
+  } catch(error) {
+    console.error("저장 실패:", error);
+    alert("저장 중 오류가 발생했습니다.");
+    btn.disabled = false;
+  }
 });
-
 
 
 
