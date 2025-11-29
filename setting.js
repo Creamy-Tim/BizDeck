@@ -90,7 +90,9 @@ document.getElementById('saveButton').addEventListener('click', async () => {
             fontSize: fontSize,
 
             card_color: card_color
-        });
+        },
+        { merge: true }
+    );
 
         console.log("변경사항이 성공적으로 저장되었습니다.");
         window.location.href = 'home.html';
