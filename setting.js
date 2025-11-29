@@ -95,6 +95,11 @@ document.getElementById('saveButton').addEventListener('click', async () => {
         console.log("변경사항이 성공적으로 저장되었습니다.");
         window.location.href = 'home.html';
     }
+     catch(error) {
+        console.error("저장 실패:", error);
+        alert("저장 중 오류가 발생했습니다.");
+        btn.disabled = false;
+    }
 });
 
 
