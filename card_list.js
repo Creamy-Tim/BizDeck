@@ -123,11 +123,6 @@ function createCard(friendUid, { nickname, name, title, phone, email, website, c
         </div>
     `;
 
-    // ✅ 친구 카드 클릭 시 해당 친구 명함 상세 페이지로 이동
-    card.addEventListener("click", () => {
-        window.location.href = `card.html?id=${friendUid}`;
-    });
-
     const cardsContainer = document.getElementById('my_card');
     cardsContainer.appendChild(card);
 
