@@ -123,7 +123,7 @@ function createCard(friendUid, { nickname, name, title, phone, email, website, c
         </div>
     `;
 
-    card.onclick = () => openDetail(friendUid);
+    card.onclick = () => openDetail(friendUid, friendData);
 
     const detailView = document.getElementById("detailView");
     if (detailView) {
@@ -194,7 +194,15 @@ const cardData = {
 /* ---------------------------
 상세 카드 열기
 --------------------------- */
-function openDetail(id, { nickname, name, title, phone, email, website, card_color }) {
+function openDetail(id, data = {}) {
+    if (!data || Object.keys(data).length === 0) {
+        console.error("openDetail: 친구 데이터가 없습니다. id =", id);
+        alert("명함 정보를 불러올 수 없습니다.");
+        return;
+    }
+
+    const { nickname, name, title, phone, email, website, card_color } = data;
+
     const d = cardData[id];
     const displayName  = nickname || name || "Name";
     const displayJob   = title    || "Job";
