@@ -91,6 +91,7 @@ async function loadCard(ownerUid) {
     const displayPhone = data.phone    || "";
     const displayEmail = data.email    || "";
     const displaySite  = data.website  || "";
+    const card_background_color = data.card_color || "#FE5858";  // 저장된 색상 값 가져오기 (기본값: 분홍색)
 
     if (nameEl) nameEl.textContent = displayName || "이름 정보 없음";
     if (jobEl)  jobEl.textContent  = displayJob  || "소속/직함 정보 없음";
@@ -102,6 +103,11 @@ async function loadCard(ownerUid) {
   } catch (err) {
     console.error("카드 정보 로드 실패:", err);
   }
+
+      // 색상 값을 적용할 텍스트 요소 선택
+    document.querySelectorAll('.my_card').forEach(textElement => {
+      textElement.style.background = card_background_color;  // 저장된 색상 값 적용
+    });
 }
 
 // 페이지 로드 시, 카드 주인 기준으로 명함 보여주기
