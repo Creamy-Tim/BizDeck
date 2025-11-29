@@ -132,7 +132,9 @@ function createCard(friendUid, { nickname, name, title, phone, email, website, c
     cardsContainer.appendChild(card);
 
     // 프로필 로드 (색상 값 포함)
-    const card_background_color = data.card_color || "#FE5858";  // 저장된 색상 값 가져오기 (기본값: 분홍색)
+    document.querySelectorAll('.my_card').forEach(textElement => {
+        textElement.style.background = card_background_color;
+    });
 
     console.log("불러온 색상 값:", card_background_color);
 
