@@ -222,7 +222,7 @@ function openDetail(id, data = {}) {
   document.getElementById("detailView").innerHTML = `
     <div class="detail-wrapper">
         <div class="detail-card" style="background:${bgColor}">
-            <img src="assets/img/detail.png" class="detail-top-img">
+            <img src="assets/img/detail.jpg" class="detail-top-img">
 
             <div class="detail-profile">
             <div class="detail-name">${displayName}</div>
