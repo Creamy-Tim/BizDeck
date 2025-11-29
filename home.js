@@ -191,3 +191,91 @@ const saveBtn = document.getElementById("save_button");
 if (saveBtn) {
   saveBtn.addEventListener("click", saveProfile);
 }
+
+// 친구들의 명함을 동적으로 생성하는 함수
+async function loadFriendsProfile(userUid) {
+    try {
+        // 1. 현재 로그인된 유저의 친구 목록 가져오기
+        const userRef = doc(db, "users", userUid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+            console.log("사용자 데이터가 없습니다.");
+            return;
+        }
+
+        const userData = userSnap.data();
+        const friendUids = userData.friends || [];  // ✅ card.js에서 저장한 필드 이름과 맞추기
+
+        console.log("친구들의 UID 배열:", friendUids);
+
+        // 2. 친구들의 데이터를 가져와서 명함 생성
+        const cardsContainer = document.getElementById('my_card');
+        cardsContainer.innerHTML = "";  // 기존 명함 지우기
+
+        if (friendUids.length === 0) {
+            const emptyMsg = document.createElement("p");
+            emptyMsg.textContent = "등록된 친구 명함이 없습니다.";
+            emptyMsg.style.margin = "16px";
+            cardsContainer.appendChild(emptyMsg);
+            return;
+        }
+
+        for (const friendUid of friendUids) {
+            const friendRef = doc(db, "users", friendUid);
+            const friendSnap = await getDoc(friendRef);
+
+            if (friendSnap.exists()) {
+                const friendData = friendSnap.data();
+                createCard(friendUid, friendData);  // ✅ friendUid 같이 넘기기
+            } else {
+                console.log(`친구 데이터가 없음: ${friendUid}`);
+            }
+        }
+
+    } catch (err) {
+        console.error("친구 명함 불러오기 실패:", err.message);
+        alert("친구 명함 불러오기 실패");
+    }
+}
+
+function createCard(friendUid, friendData) {
+  const { nickname, name, title, phone, email, website, card_color } = friendData;
+  const displayName  = nickname || name || "Name";
+  const displayJob   = title    || "Job";
+  const displayPhone = phone    || "010-0000-0000";
+  const displayEmail = email    || "Email";
+  const displaySite  = website  || "Website";
+
+  const card = document.createElement('div');
+  card.classList.add('my_card');
+
+  card.innerHTML = `
+      <div class="my_name">
+      <p class="my_name_text">${displayName}</p>
+      </div>
+      <div class="my_job">
+      <p class="my_job_text">${displayJob}</p>
+      </div>
+      <div class="contact_case">
+      <div class="contact">
+          <div class="contact_text">
+          <p class="contact_text_text">${displayPhone}</p>
+          </div>
+      </div>
+      <div class="contact">
+          <div class="contact_text">
+          <p class="contact_text_text">${displayEmail}</p>
+          </div>
+      </div>
+      <div class="contact">
+          <div class="contact_text">
+          <p class="contact_text_text">${displaySite}</p>
+          </div>
+      </div>
+      </div>
+      <div class="logo">
+      <img src="./assets/img/BizDeck_logo.svg" class="logo_img">
+      </div>
+  `;
+}
