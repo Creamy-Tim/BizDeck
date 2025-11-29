@@ -75,3 +75,102 @@
 .setting_button {
     left: 248px;
 }
+
+
+
+/*디테일*/
+/* 상세 카드도 HOME 카드 느낌과 맞추기 */
+.card-detail {
+    padding-top: 16px;
+}
+
+.detail-top {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+/*디테일뷰*/
+/* 상세 전체 컨테이너: width를 부모에 맞춤 */
+.detail-card {
+    width: 360px;
+    height: 900px;
+    max-width: 360px; /* 카드 최대폭 (list 카드 폭과 동일) */
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 61px;
+}
+
+/* 상세 상단 이미지 */
+.detail-top-img {
+    width: 340px;
+    height: 200px; /* 카드 높이에 맞게 더 자연스럽게 */
+    object-fit: cover;
+    margin-top: 10px;
+    margin-left: 10px;
+    display: block;
+    border-radius: 16px;
+}
+
+/* 상세 정보 텍스트 구역 */
+.detail-main {
+    padding: 20px;
+    color: white;
+}
+
+.detail-name {
+    margin-left: 30px;
+    margin-top: -100px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.detail-job {
+    margin-left: 30px;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.detail-contacts {
+    font-size: 14px;
+    margin-left: 30px;
+}
+
+.detail-profile{
+    width: 300px;
+}
+
+/* 아래 내용 박스들 */
+.info-section {
+    width: 120px;
+    max-width: 360px;
+    margin: 12px auto;
+    background: rgba(255,255,255,.7);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.info-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.tools-list,
+.career-box {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* 뒤로가기 버튼 */
+.back-btn {
+    width: 100%;
+    max-width: 360px;
+    margin: 20px auto;
+    text-align: center;
+    padding: 12px 0;
+    background: #eee;
+    border-radius: 12px;
+    font-size: 16px;
+}
