@@ -93,6 +93,7 @@ function createCard(friendUid, { nickname, name, title, phone, email, website, c
 
     const card = document.createElement('div');
     card.classList.add('my_card');
+    card.onclick = () => openDetail(userUid);
 
     card.innerHTML = `
         <div class="my_name">
@@ -205,46 +206,46 @@ const cardData = {
 상세 카드 열기
 --------------------------- */
 function openDetail(id) {
-const d = cardData[id];
+    const d = cardData[id];
 
-document.getElementById("listView").style.display = "none";
-document.getElementById("detailView").style.display = "block";
+    document.getElementById("listView").style.display = "none";
+    document.getElementById("detailView").style.display = "block";
 
-document.getElementById("detailView").innerHTML = `
-    <div class="detail-wrapper">
+    document.getElementById("detailView").innerHTML = `
+        <div class="detail-wrapper">
 
-        <div class="detail-card" style="background:${d.color}">
-            <img src="assets\img\detail.png" class="detail-top-img">
+            <div class="detail-card" style="background:${d.color}">
+                <img src="assets\img\detail.png" class="detail-top-img">
 
-            <div class="detail-profile">
-                <div class="detail-name">${d.name}</div>
-                <div class="detail-job">${d.job}</div>
+                <div class="detail-profile">
+                    <div class="detail-name">${d.name}</div>
+                    <div class="detail-job">${d.job}</div>
 
-                <div class="detail-contacts">
-                    <p>📞 ${d.phone}</p>
-                    <p>📧 ${d.email}</p>
-                    <p>🌐 ${d.web}</p>
-                </div>
+                    <div class="detail-contacts">
+                        <p>📞 ${d.phone}</p>
+                        <p>📧 ${d.email}</p>
+                        <p>🌐 ${d.web}</p>
+                    </div>
+                        <div class="info-section">
+                        <div class="info-section-title">USING TOOLS</div>
+                        <div class="tools-list">${d.tools}</div>
+                    </div>
+
                     <div class="info-section">
-                    <div class="info-section-title">USING TOOLS</div>
-                    <div class="tools-list">${d.tools}</div>
-                </div>
-
-                <div class="info-section">
-                    <div class="info-section-title">CAREER</div>
-                    <div class="career-box">${d.career}</div>
+                        <div class="info-section-title">CAREER</div>
+                        <div class="career-box">${d.career}</div>
+                    </div>
                 </div>
             </div>
+
+            
+
+            <div class="back-btn" onclick="closeDetail()">← Back to List</div>
         </div>
-
-        
-
-        <div class="back-btn" onclick="closeDetail()">← Back to List</div>
-    </div>
-`;
+    `;
 }
 
 function closeDetail() {
-document.getElementById("detailView").style.display = "none";
-document.getElementById
+    document.getElementById("detailView").style.display = "none";
+    document.getElementById
 }
