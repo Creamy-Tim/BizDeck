@@ -93,7 +93,6 @@ function createCard(friendUid, { nickname, name, title, phone, email, website, c
 
     const card = document.createElement('div');
     card.classList.add('my_card');
-    card.onclick = () => openDetail(friendUid);
 
     card.innerHTML = `
         <div class="my_name">
@@ -124,15 +123,23 @@ function createCard(friendUid, { nickname, name, title, phone, email, website, c
         </div>
     `;
 
+    card.onclick = () => openDetail(friendUid);
+
+    const detailView = document.getElementById("detailView");
+    if (detailView) {
+    detailView.style.display = "block";
+    } else {
+    console.error("detailView 요소를 찾을 수 없습니다.");
+    }
+
+
     const cardsContainer = document.getElementById('my_card');
     cardsContainer.appendChild(card);
 
     const card_background_color = card_color || "#FE5858";
 
-    // 프로필 로드 (색상 값 포함)
-    document.querySelectorAll('.my_card').forEach(textElement => {
-        textElement.style.background = card_background_color;
-    });
+    card.style.background = card_background_color;
+
 
     console.log("불러온 색상 값:", card_background_color);
 }
@@ -208,7 +215,7 @@ const cardData = {
 function openDetail(id) {
     const d = cardData[id];
 
-    document.getElementById("listView").style.display = "none";
+    document.getElementById("my_card").style.display = "none";
     document.getElementById("detailView").style.display = "block";
 
     document.getElementById("detailView").innerHTML = `
