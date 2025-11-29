@@ -84,7 +84,8 @@ async function loadFriendsProfile(userUid) {
     }
 }
 
-function createCard(friendUid, { nickname, name, title, phone, email, website, card_color }) {
+function createCard(friendUid, friendData) {
+    const { nickname, name, title, phone, email, website, card_color } = friendData;
     const displayName  = nickname || name || "Name";
     const displayJob   = title    || "Job";
     const displayPhone = phone    || "010-0000-0000";
