@@ -84,17 +84,8 @@
     </div>
 </div>
 
-<!-- Firebase App SDK -->
-<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js"></script>
-
-<!-- Firebase Authentication SDK -->
-<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js"></script>
-
-<!-- Firebase Firestore SDK -->
-<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js"></script>
 <!-- QRCode.js: QR 다운로드용 -->
 <script type="module" src="card.js"></script>
-<script type="module" src="../home.js"></script>
 
 <script type="module">
     
@@ -142,44 +133,11 @@
     }
 
     // 페이지 링크에서 ID 추출 함수 (현재 페이지의 쿼리 파라미터에서 'id' 추출)
-    // 페이지 링크에서 ID 추출 함수 (현재 페이지의 쿼리 파라미터에서 'id' 추출)
     function getIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);  // 현재 URL에서 쿼리 파라미터를 추출
         return urlParams.get('id');  // 'id' 파라미터 값 가져오기
     }
 
-    // 친구 추가하기 버튼 클릭 이벤트
-    btnSaveToApp?.addEventListener('click', async () => {
-        const friendId = getIdFromUrl();  // URL에서 친구의 ID를 추출
-
-        if (!friendId) {
-            alert("친구 ID를 가져올 수 없습니다.");
-            return;
-        }
-
-        const user = getAuth().currentUser; // Firebase Auth에서 로그인된 사용자 가져오기
-        if (!user) {
-            alert('로그인 후 친구를 추가할 수 있습니다.');
-            return;
-        }
-
-        const userUid = user.uid;  // 로그인된 사용자의 UID
-
-        try {
-            // Firestore에서 해당 사용자의 문서를 가져오기
-            const userDocRef = doc(db, "users", userUid);
-
-            // 친구 목록에 친구 ID 추가 (배열 형태로)
-            await updateDoc(userDocRef, {
-                friends: arrayUnion(friendId), // Firestore 배열 필드에 추가
-            });
-
-            console.log("친구 ID가 성공적으로 추가되었습니다.");
-        } catch (error) {
-            console.error("친구 추가 실패:", error);  // 더 자세한 오류 확인
-            alert("친구 추가 실패: " + error.message);
-        }
-    });
 
 
     // 앱 다운로드 링크로 이동 (버튼 클릭 시)
