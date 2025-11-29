@@ -153,3 +153,103 @@ onAuthStateChanged(auth, (user) => {
         alert("로그인 후 명함을 확인할 수 있습니다.");
     }
 });
+
+
+
+
+
+
+
+/* ---------------------------
+카드 상세 데이터
+--------------------------- */
+const cardData = {
+    1: {
+        color: "#FB1CFF",
+        image: "/mnt/data/CARD LIST - 카드 상세 보기.png",
+        name: "Seohee Yun",
+        job: "Product Designer",
+        phone: "010-0000-0000",
+        email: "abcde@yonsei.ac.kr",
+        web: "www.abc.com",
+        tools: "Figma · Adobe XD · Illustrator · Photoshop · After Effects · Notion",
+        career: `
+            2023-현재<br>Gildam Studio(길담 스튜디오)<br>Lead UX Designer<br><br>
+            2021-2023<br>BlueBean Creative<br>Junior Visual Designer<br><br>
+            2021<br>연세대학교 미래캠퍼스 시각디자인전공 졸업
+        `
+    },
+
+    2: {
+        color: "#5900FF",
+        image: "/mnt/data/CARD LIST - 카드 상세 보기.png",
+        name: "Michel Choi",
+        job: "Engineer",
+        phone: "010-0000-0000",
+        email: "abcde@yonsei.ac.kr",
+        web: "www.abc.com",
+        tools: "Python · C++ · Embedded · PCB Designing",
+        career: `2022-현재<br>HP Korea Engineer`
+    },
+
+    3: {
+        color: "#D7F439",
+        image: "/mnt/data/CARD LIST - 카드 상세 보기.png",
+        name: "Jennifer Liu",
+        job: "Planning & Implementation",
+        phone: "010-0000-0000",
+        email: "abcde@yonsei.ac.kr",
+        web: "www.abc.com",
+        tools: "Notion · Figma · Excel · Communication Design",
+        career: `2020-현재<br>Product Planner`
+    }
+};
+
+
+/* ---------------------------
+상세 카드 열기
+--------------------------- */
+function openDetail(id) {
+const d = cardData[id];
+
+document.getElementById("listView").style.display = "none";
+document.getElementById("detailView").style.display = "block";
+
+document.getElementById("detailView").innerHTML = `
+    <div class="detail-wrapper">
+
+        <div class="detail-card" style="background:${d.color}">
+            <img src="assets\img\detail.png" class="detail-top-img">
+
+            <div class="detail-profile">
+                <div class="detail-name">${d.name}</div>
+                <div class="detail-job">${d.job}</div>
+
+                <div class="detail-contacts">
+                    <p>📞 ${d.phone}</p>
+                    <p>📧 ${d.email}</p>
+                    <p>🌐 ${d.web}</p>
+                </div>
+                    <div class="info-section">
+                    <div class="info-section-title">USING TOOLS</div>
+                    <div class="tools-list">${d.tools}</div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-section-title">CAREER</div>
+                    <div class="career-box">${d.career}</div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="back-btn" onclick="closeDetail()">← Back to List</div>
+    </div>
+`;
+}
+
+function closeDetail() {
+document.getElementById("detailView").style.display = "none";
+document.getElementById
+}
