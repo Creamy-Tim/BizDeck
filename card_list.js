@@ -196,61 +196,65 @@ const cardData = {
 상세 카드 열기
 --------------------------- */
 function openDetail(id, data = {}) {
-    if (!data || Object.keys(data).length === 0) {
-        console.error("openDetail: 친구 데이터가 없습니다. id =", id);
-        alert("명함 정보를 불러올 수 없습니다.");
-        return;
-    }
+  if (!data || Object.keys(data).length === 0) {
+    console.error("openDetail: 친구 데이터가 없습니다. id =", id);
+    alert("명함 정보를 불러올 수 없습니다.");
+    return;
+  }
 
-    const { nickname, name, title, phone, email, website, card_color } = data;
+  const {
+    nickname, name, title, phone, email, website,
+    card_color,
+    tools = "",       // Firebase 에서 가져온 tools (명함 상세 스킬 등)
+    career = ""       // Firebase 에서 가져온 career / 경력 정보 등
+  } = data;
 
-    const d = cardData[id];
-    const displayName  = nickname || name || "Name";
-    const displayJob   = title    || "Job";
-    const displayPhone = phone    || "010-0000-0000";
-    const displayEmail = email    || "Email";
-    const displaySite  = website  || "Website";
-    const card_background_color = card_color || "#FE5858";
+  const displayName = nickname || name || "Name";
+  const displayJob  = title || "Job";
+  const displayPhone = phone || "010-0000-0000";
+  const displayEmail = email || "Email";
+  const displaySite  = website || "Website";
+  const bgColor = card_color || "#FE5858";
 
-    const card = document.createElement('div');
-    card.classList.add('my_card');
+  document.getElementById("my_card").style.display = "none";
+  document.getElementById("detailView").style.display = "block";
 
-    document.getElementById("my_card").style.display = "none";
-    document.getElementById("detailView").style.display = "block";
+  document.getElementById("detailView").innerHTML = `
+    <div class="detail-wrapper">
+        <div class="detail-card" style="background:${bgColor}">
+            <img src="assets/img/detail.png" class="detail-top-img">
 
-    document.getElementById("detailView").innerHTML = `
-        <div class="detail-wrapper">
+            <div class="detail-profile">
+            <div class="detail-name">${displayName}</div>
+            <div class="detail-job">${displayJob}</div>
 
-            <div class="detail-card" style="background:${card_background_color}">
-                <img src="assets\img\detail.png" class="detail-top-img">
-
-                <div class="detail-profile">
-                    <div class="detail-name">${displayName}</div>
-                    <div class="detail-job">${displayJob}</div>
-
-                    <div class="detail-contacts">
-                        <p>📞 ${displayPhone}</p>
-                        <p>📧 ${displayEmail}</p>
-                        <p>🌐 ${displaySite}</p>
-                    </div>
-                        <div class="info-section">
-                        <div class="info-section-title">USING TOOLS</div>
-                        <div class="tools-list">${d.tools}</div>
-                    </div>
-
-                    <div class="info-section">
-                        <div class="info-section-title">CAREER</div>
-                        <div class="career-box">${d.career}</div>
-                    </div>
-                </div>
+            <div class="detail-contacts">
+                <p>📞 ${displayPhone}</p>
+                <p>📧 ${displayEmail}</p>
+                <p>🌐 ${displaySite}</p>
             </div>
 
-            
+            ${ tools ? `
+                <div class="info-section">
+                <div class="info-section-title">USING TOOLS</div>
+                <div class="tools-list">${tools}</div>
+                </div>
+            ` : "" }
 
-            <div class="back-btn" onclick="closeDetail()">← Back to List</div>
+            ${ career ? `
+                <div class="info-section">
+                <div class="info-section-title">CAREER</div>
+                <div class="career-box">${career}</div>
+                </div>
+            ` : "" }
+            </div>
         </div>
-    `;
+
+        <div class="back-btn" onclick="closeDetail()">← Back to List</div>
+    </div>
+  `;
 }
+
 
 function closeDetail() {
     document.getElementById("detailView").style.display = "none";
