@@ -279,3 +279,15 @@ function createCard(friendUid, friendData) {
       </div>
   `;
 }
+
+// 로그인 상태 감지 후 친구 명함 로드
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log("로그인된 유저:", user.email);
+        // 로그인된 유저의 UID를 가져와서 친구 명함을 로드
+        loadFriendsProfile(user.uid);
+    } else {
+        console.log("로그인되지 않았습니다.");
+        alert("로그인 후 명함을 확인할 수 있습니다.");
+    }
+});
