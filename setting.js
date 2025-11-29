@@ -53,19 +53,21 @@ document.getElementById('saveButton').addEventListener('click', async () => {
 
   try {
     await setDoc(doc(db, "users", user.uid), {
-      nickname: name,
-      title: job,
-      phone,
-      email,
-      website,
-      // 스타일이나 기타 데이터
-      isUppercase,
-      isBold,
-      isItalic,
-      isUnderline,
-      fontSize,
-      card_color,
-      timestamp: new Date()
+        nickname: name,
+        title: job,
+        phone: phone,
+        email: email,
+        website: website,
+        timestamp: new Date(), // 저장 시각
+
+        isUppercase: isUppercase,
+        isBold: isBold,
+        isItalic: isItalic,
+        isUnderline: isUnderline,
+
+        fontSize: fontSize,
+
+        card_color: card_color
     });
 
     console.log("변경사항이 성공적으로 저장되었습니다.");
