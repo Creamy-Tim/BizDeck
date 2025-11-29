@@ -142,7 +142,6 @@
     }
 
     // 페이지 링크에서 ID 추출 함수 (현재 페이지의 쿼리 파라미터에서 'id' 추출)
-    // 페이지 링크에서 ID 추출 함수 (현재 페이지의 쿼리 파라미터에서 'id' 추출)
     function getIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);  // 현재 URL에서 쿼리 파라미터를 추출
         return urlParams.get('id');  // 'id' 파라미터 값 가져오기
@@ -176,11 +175,10 @@
 
             console.log("친구 ID가 성공적으로 추가되었습니다.");
         } catch (error) {
-            console.error("친구 추가 실패:", error);  // 더 자세한 오류 확인
-            alert("친구 추가 실패: " + error.message);
+            console.error("친구 추가 실패:", error);
+            alert("친구 추가 실패");
         }
     });
-
 
     // 앱 다운로드 링크로 이동 (버튼 클릭 시)
     if (btnDownloadApp) {
