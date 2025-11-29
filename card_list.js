@@ -84,7 +84,7 @@ async function loadFriendsProfile(userUid) {
     }
 }
 
-function createCard(friendUid, { nickname, name, title, phone, email, website }) {
+function createCard(friendUid, { nickname, name, title, phone, email, website, card_color }) {
     const displayName  = nickname || name || "Name";
     const displayJob   = title    || "Job";
     const displayPhone = phone    || "010-0000-0000";
@@ -130,6 +130,16 @@ function createCard(friendUid, { nickname, name, title, phone, email, website })
 
     const cardsContainer = document.getElementById('my_card');
     cardsContainer.appendChild(card);
+
+    // 프로필 로드 (색상 값 포함)
+    const card_background_color = data.card_color || "#FE5858";  // 저장된 색상 값 가져오기 (기본값: 분홍색)
+
+    console.log("불러온 색상 값:", card_background_color);
+
+    // 색상 값을 적용할 텍스트 요소 선택
+    document.querySelectorAll('.my_card').forEach(textElement => {
+      textElement.style.background = card_background_color;  // 저장된 색상 값 적용
+    });
 }
 
 
