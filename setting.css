@@ -73,6 +73,7 @@
     border: 1px solid #141414;
     margin-left: 8px;
     position: relative;
+    cursor: pointer;
 }
 
 .elements1{
@@ -120,11 +121,174 @@
     right: 10px;
 }
 
+.elements3{
+    width: 30px;
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1.251px solid #959595;
+    background: #616161;
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+}
+
+/* 두 번째 카드 레이아웃 */
+.namecard_making:nth-child(2) .elements1 {
+    width: 40px;
+    height: 40px;
+    margin-top: 8px;
+    margin-left: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.namecard_making:nth-child(2) .elements2 {
+    width: 65px;
+    height: 25px;
+    margin-top: 8px;
+    margin-left: 0;
+    position: absolute;
+    top: 0;
+    right: 4px;
+}
+
+.namecard_making:nth-child(2) .elements3 {
+    width: 40px;
+    height: 20px;
+    position: absolute;
+    bottom: 8px;
+    left: 4px;
+    right: auto;
+}
+
+/* 세 번째 카드 레이아웃 */
+.namecard_making:nth-child(3) .elements1 {
+    width: 35px;
+    height: 20px;
+    margin-top: 0;
+    margin-left: 0;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    left: auto;
+}
+
+.namecard_making:nth-child(3) .elements2 {
+    width: 45px;
+    height: 18px;
+    margin-top: 0;
+    margin-left: 0;
+    position: absolute;
+    top: 38px;
+    right: 8px;
+    left: auto;
+}
+
+.namecard_making:nth-child(3) .elements3 {
+    width: 70px;
+    height: 22px;
+    position: absolute;
+    bottom: 10px;
+    right: 8px;
+    left: auto;
+}
+
+/* 명함 레이아웃 스타일 - 두 번째 레이아웃 */
+.my_card.layout-2 .my_name {
+    position: absolute;
+    top: 25px;
+    right: 22px;
+    left: auto;
+    margin-top: 0;
+}
+
+.my_card.layout-2 .my_job {
+    position: absolute;
+    top: 66px;
+    right: 22px;
+    left: auto;
+    margin-top: 0;
+}
+
+.my_card.layout-2 .contact_case {
+    position: absolute;
+    bottom: 27px;
+    left: 24px;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.my_card.layout-2 .contact {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.my_card.layout-2 .contact_text {
+    margin-left: 6px;
+}
+
+.my_card.layout-2 .logo {
+    position: absolute;
+    bottom: 27px;
+    right: 22px;
+    width: 140px;
+    height: 65px;
+}
+
+/* 명함 레이아웃 스타일 - 세 번째 레이아웃 */
+.my_card.layout-3 .my_name {
+    position: absolute;
+    top: 25px;
+    left: 22px;
+    margin-top: 0;
+}
+
+.my_card.layout-3 .my_job {
+    position: absolute;
+    top: 66px;
+    left: 22px;
+    margin-top: 0;
+}
+
+.my_card.layout-3 .contact_case {
+    position: absolute;
+    bottom: 27px;
+    left: 24px;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.my_card.layout-3 .contact {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.my_card.layout-3 .contact_text {
+    margin-left: 6px;
+}
+
+.my_card.layout-3 .logo {
+    position: absolute;
+    top: 25px;
+    right: 22px;
+    bottom: auto;
+    width: 112px;
+    height: 51px;
+}
+
 .text_case {
     height: 209px;
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
 }
 
 .style_case, .font_case, .size_case {
@@ -135,6 +299,10 @@
   display: flex;
   align-items: center;
   z-index: 20;
+}
+
+.font_case {
+  z-index: 500;
 }
 
 .style_box, .size_box {
@@ -161,6 +329,65 @@
 .font_case {
   height: 19px;
   margin-top: 32px;
+  justify-content: space-between;
+}
+
+.font_dropdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  z-index: 501;
+}
+
+.font_selected {
+  color: #141414;
+  font-family: "Spartan MB";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.font_dropdown_menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #ffffff;
+  border: 1px solid #D9D9D9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  display: none;
+  z-index: 9999;
+}
+
+.font_dropdown_menu.show {
+  display: block;
+}
+
+.font_option {
+  padding: 12px 16px;
+  color: #141414;
+  font-family: "Spartan MB";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.font_option:hover {
+  background-color: #f5f5f5;
+}
+
+.font_option:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.font_option:last-child {
+  border-radius: 0 0 8px 8px;
 }
 
 .tools_text {
@@ -171,7 +398,7 @@
   font-weight: 500;
   line-height: normal;
   margin: 0;
-  margin-right: 36px;
+  margin-right: 0;
 }
 
 /* 위에 추가 스타일 있음 */

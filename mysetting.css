@@ -1,0 +1,51 @@
+.settings_list {
+    width: 360px;
+    margin: 24px auto 0;
+}
+
+.setting_item {
+    width: 328px;
+    height: 56px;
+    background: rgba(217, 217, 217, 0.20);
+    border-radius: 16px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    cursor: pointer;
+}
+
+.setting_text {
+    font-family: 'SpartanMB';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #141414;
+    margin: 0;
+}
+
+.setting_item svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+/* 다른 css 속성은 component.css */
+.choice {
+    left: 166px;
+    width: 119px;
+}
+
+.home_button {
+    left: 55px;
+}
+
+.card_list_button {
+    left: 110px;
+}
+
+.setting_button {
+    left: 179px;
+}
+

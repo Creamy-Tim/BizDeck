@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="component.css" />
     <link rel="stylesheet" href="setting.css" />
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="./img/Exclude.svg" rel="shortcut icon" type="image/x-icon">
+    <link href="./assets/img/BizDeck_logo.svg" rel="shortcut icon" type="image/x-icon">
 </head>
 <body>
+    <script src="setting.js"></script>
     <section class="phone">
         <section class="header">
             <p class="page_name">Customizing</p>
@@ -100,6 +101,18 @@
                 </div>
                 <div class="font_case">
                     <p class="tools_text">Font</p>
+                    <div class="font_dropdown" onclick="toggleFontDropdown()">
+                        <span class="font_selected" id="font_selected">All</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="dropdown_arrow">
+                            <path d="M4 6L8 10L12 6" stroke="#959595" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="font_dropdown_menu" id="font_dropdown_menu">
+                            <div class="font_option" onclick="selectFont('All')">All</div>
+                            <div class="font_option" onclick="selectFont('Spartan MB')">Spartan MB</div>
+                            <div class="font_option" onclick="selectFont('Nagoda')">Nagoda</div>
+                            <div class="font_option" onclick="selectFont('PangeaAfrikanTrial')">PangeaAfrikanTrial</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="size_case">
                     <p class="tools_text">Size</p>
