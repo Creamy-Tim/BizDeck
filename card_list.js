@@ -234,7 +234,7 @@ function openDetail(id, data = {}) {
   const {
     nickname, name, title, phone, email, website,
     card_color,
-    tools = "VSC",       // Firebase 에서 가져온 tools (명함 상세 스킬 등)
+    tools = "VSC, Figma, HTML, CSS, JS, FireBase, Notion",       // Firebase 에서 가져온 tools (명함 상세 스킬 등)
     career = "2023-현재"       // Firebase 에서 가져온 career / 경력 정보 등
   } = data;
 
