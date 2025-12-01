@@ -89,6 +89,9 @@
     border-radius: 16px;
     overflow: hidden;
     margin-top: 61px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .detail-top-img {
@@ -126,9 +129,6 @@
 
 .detail-profile {
     width: 300px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
 }
 
 .info-section {
