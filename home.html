@@ -136,8 +136,12 @@
     if (btn.classList.contains('qr')) {
       if (!currentUser) {
         alert("로그인 후에 QR을 사용할 수 있습니다.");
+        
+        if (event && event.preventDefault) event.preventDefault();
+
         btn.classList.remove('qr');
-        window.location.href = "https://creamy-tim.github.io/BizDeck/";
+        window.location.replace("https://creamy-tim.github.io/BizDeck/");
+        return false;
         return;
       }
 
