@@ -210,7 +210,7 @@ async function loadFriendsProfile(userUid) {
         console.log("친구들의 UID 배열:", friendUids);
 
         // 2. 친구들의 데이터를 가져와서 명함 생성
-        const cardsContainer = document.getElementById('my_card');
+        const cardsContainer = document.getElementById('friends_cards');
         cardsContainer.innerHTML = "";  // 기존 명함 지우기
 
         if (friendUids.length === 0) {
