@@ -129,6 +129,11 @@
 }
 
 .friend_card {
+    width: 343px;
+    height: 220px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    position: relative;
     margin: 0 auto 8px;
 }
 

@@ -75,7 +75,7 @@ async function loadFriends(uid) {
 
         const data = snap.data();
         const card = document.createElement("div");
-        card.classList.add("my_card", "friend_card");
+        card.className = "friend_card";
 
         if (data.card_color) card.style.background = data.card_color;
 
