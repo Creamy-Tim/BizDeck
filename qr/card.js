@@ -125,6 +125,7 @@ async function addFriend(friendUid) {
 
   if (!currentUser) {
     alert("로그인 후 친구 추가가 가능합니다.");
+    window.location.href = "https://creamy-tim.github.io/BizDeck/";
     return;
   }
 
