@@ -287,5 +287,5 @@ function openDetail(id, data = {}) {
 
 function closeDetail() {
     document.getElementById("detailView").style.display = "none";
-    document.getElementById
+    document.getElementById("my_card").style.display = "block";
 }

@@ -1,47 +1,177 @@
-/* 명함(qr) 밑 버튼 */
-
-.actions {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-
-    gap: 10px;
+.card_list_title {
+    height: 40px;
+    margin: 60px 0 0 16px;
+    font-family: 'SpartanMB';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
 }
 
-.qr_button {
+.card_list {
+    width: 360px;
+    height: 600px;
+    margin: 24px auto 0;
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
-.btn {
-    width: 30%;
-    padding: 12px 16px;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    background: #ffffff;
-    font-size: 14px;
-    cursor: pointer;
+.my_card {
+  width: 343px;
+  height: 220px;
+  background-color: #FB1CFF;
+  border-radius: 16px;
+  position: relative;
+  margin-top: 8px;
 }
 
-.btn.primary {
-    background: #005EB8;
-    color: #ffffff;
-    border-color: #005EB8;
+.my_name, .my_job, .contact_text, .logo {
+    border-style: none;
 }
 
-.btn:active {
-    transform: translateY(1px);
+.my_name_text, .my_job_text, .contact_text_text {
+    font-family: "Spartan MB";
+    font-style: normal;
+    color: #000000;
+    margin: 0;
 }
 
-.helper-text {
-    margin-top: 20px;
+.my_name_text {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.my_job_text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.contact_text_text {
     font-size: 12px;
-    color: #9ca3af;
+    font-weight: 500;
 }
 
-.error {
-    text-align: center;
-    padding: 40px 20px;
-    color: #b91c1c;
+.logo_img {
+    width: auto;
+    height: 50px;
+    position: absolute;
+    right: 0px;
 }
 
+/* 다른 css 속성은 component.css */
+.choice {
+    left: 96px;
+    width: 136px;
+}
+
+.home_button {
+    left: 56px;
+}
+
+.card_list_button {
+    left: 111px;
+}
+
+.setting_button {
+    left: 248px;
+}
+
+
+
+/*디테일*/
+/* 명함 카드 스타일 예시 */
+/* ---------------------------
+DETAIL VIEW (완전 복원)
+--------------------------- */
+
+/* detail 전체 wrapper */
+#detailView {
+    width: 100%;
+    display: none;
+}
+
+/* 상세 전체 레이아웃 */
+.detail-wrapper {
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px 0 120px; /* footer와 겹치지 않도록 여백 */
+}
+
+/* 상세 카드 */
+.detail-card {
+    width: 100%;
+    height: auto;
+    background: #ff66ff; 
+    border-radius: 22px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 상단 이미지 */
+.detail-top-img {
+    width: 95%;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 22px;
+}
+
+/* 프로필 영역 */
+.detail-profile {
+    padding: 10px;
+    margin-top: 10px;
+    color: white;
+}
+
+/* 이름 */
+.detail-name {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: -120px;
+    margin-left: 20px;
+    margin-bottom: 3px;
+}
+
+/* 직업 */
+.detail-job {
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 20px;
+    margin-bottom: 50px;
+}
+
+/* 연락처 묶음 */
+.detail-contacts p {
+    font-size: 14px;
+
+}
+
+/* 공통 카드 박스 */
+.info-section {
+    width: 94%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 10px;
+    border-radius: 18px;
+    color: #000;
+    margin: 16px 0;
+}
+
+/* 박스 제목 */
+.info-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* 내용 */
+.tools-list,
+.career-box {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* detail → list 로 복귀 버튼 (숨김 가능) */
+.back-btn {
+    display: none; /* JS에서 onclick으로 전체 wrapper 클릭 시 close */
+}
