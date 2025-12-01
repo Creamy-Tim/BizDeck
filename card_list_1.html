@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BizDeck</title>
+    <link rel="stylesheet" href="component.css" />
+    <link rel="stylesheet" href="card_list_1.css" />
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="./assets/img/BizDeck_logo.svg" rel="shortcut icon" type="image/x-icon">
+</head>
+<body>
+    <section class="phone">
+        <section class="header">
+            <p class="page_name">Card list</p>
+            <img src="./assets/img/bell.png" class="bell">
+        </section>
+        <section class="body">
+            <p class="card_list_title">Recent watched</p>
+            <div class="card_list">
+
+                <!-- 명함 -->
+                <div id="my_card"></div>
+                <div id="detailView" style="display: none;"></div>
+            </div>
+        </section>
+        <section class="footer">
+            <div class="choice">
+                <p class="footer_text">Card list</p>
+            </div>
+            <img src="./assets/img/home.png" class="home_button" onclick="location.href='home.html'">
+            <img src="./assets/img/card_list_choice.png" class="card_list_button">
+            <img src="./assets/img/setting.png" class="setting_button" onclick="location.href='setting.html'">
+        </section>
+        <section style="height: 185px;"></section>
+    </section>
+    
+    
+    <script type="module" src="card_list.js"></script>
+</body>
+</html>
