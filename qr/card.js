@@ -104,7 +104,7 @@ async function loadCard(ownerUid) {
     console.error("카드 정보 로드 실패:", err);
   }
 
-      // 색상 값을 적용할 텍스트 요소 선택
+    // 색상 값을 적용할 텍스트 요소 선택
     document.querySelectorAll('.my_card').forEach(textElement => {
       textElement.style.background = card_background_color;  // 저장된 색상 값 적용
     });
