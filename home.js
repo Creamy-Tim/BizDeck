@@ -35,7 +35,7 @@ const contactEl = contactNodes[0];
 const emailEl = contactNodes[1];
 const websiteEl = contactNodes[2];
 
-const friendsWrapEl = document.getElementById("friends_cards");
+const friendsWrapEl = document.getElementById("friend_cards");
 
 // ================= 내 명함 불러오기 =================
 async function loadProfile(uid) {
@@ -75,7 +75,7 @@ async function loadFriends(uid) {
 
         const data = snap.data();
         const card = document.createElement("div");
-        card.className = "friend_card";
+        card.className = "friend_cards";
 
         if (data.card_color) card.style.background = data.card_color;
 
