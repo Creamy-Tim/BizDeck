@@ -257,7 +257,7 @@ function openDetail(id, data = {}) {
             <div class="detail-name">${displayName}</div>
             <div class="detail-job">${displayJob}</div>
 
-            <div class="detail-contacts">
+            <div class="detail-contacts, info-section">
                 <p>📞 ${displayPhone}</p>
                 <p>📧 ${displayEmail}</p>
                 <p>🌐 ${displaySite}</p>
