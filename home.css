@@ -128,8 +128,8 @@
     flex-direction: column;
 }
 
-#friends_cards {
-    margin-bottom: 8px;
+.friend_card {
+    margin: 0 auto 8px;
 }
 
 /* 다른 css 속성은 component.css */
