@@ -107,80 +107,62 @@
     </section>
     
     
-    <!-- QRCode.js -->
+<!-- QRCode.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- home.js (메인 JS 파일) -->
 <script type="module" src="home.js"></script>
 
+<!-- QR 스위치 로직 (auth 선언 X) -->
 <script type="module">
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+  const auth = getAuth();             
+  let currentUser = null;             
 
-  const auth = getAuth();
-  const CARD_PAGE_URL = "https://creamy-tim.github.io/BizDeck/qr/card.html";
-
-  // 🔹 QR에서 쓸 로그인 사용자 저장용 변수
-  let currentUser = null;
-
-  // 로그인 상태 감지해서 currentUser에 저장
   onAuthStateChanged(auth, (user) => {
     currentUser = user;
-    if (user) {
-      console.log("QR용 로그인 감지:", user.email);
-    } else {
-      console.log("QR용: 로그아웃 상태");
-    }
   });
 
-  // 카드/QR 스위치 함수
+  // ❗ Switch 는 window에 등록해야 HTML onclick 이 동작함
   window.Switch = function () {
-      console.log("Switch 클릭됨");
+    const btn     = document.querySelector('.card_qr_switch');  
+    const card    = document.getElementById('card');           
+    const qr      = document.getElementById('qr');             
+    const my_card = document.getElementById('my_card');
+    const qrArea  = document.getElementById('qrArea');
 
-      const btn     = document.querySelector('.card_qr_switch');  
-      const card    = document.getElementById('card');           
-      const qr      = document.getElementById('qr');             
-      const my_card = document.getElementById('my_card');
-      const qrArea  = document.getElementById('qrArea');
+    btn.classList.toggle('qr');
 
-      // 상태 토글
-      btn.classList.toggle('qr');
-
-      // 🔵 QR 모드
-      if (btn.classList.contains('qr')) {
-
-          if (!currentUser) {
-              alert("로그인 후에 QR을 사용할 수 있습니다.");
-              btn.classList.remove('qr');
-              return;
-          }
-
-          const uId    = currentUser.uid;
-          const qrText = CARD_PAGE_URL + "?id=" + encodeURIComponent(uId);
-          console.log("QR 생성 URL:", qrText);
-
-          document.getElementById("qrArea").addEventListener("click", function() {
-                window.location.href = qrText;
-          });
-
-          // 화면 전환
-          card.style.display    = 'none';
-          qr.style.display      = 'block';
-          my_card.style.display = 'none';
-
-          // QR 영역 초기화 + 생성
-          qrArea.innerHTML      = '';
-          qrArea.style.display  = 'block';
-
-          new QRCode(qrArea, {
-              text: qrText,
-              correctLevel: QRCode.CorrectLevel.H
-          });
-
-      // 🔴 명함 모드
-      } else {
-          card.style.display    = 'block';
-          qr.style.display      = 'none';
-          my_card.style.display = 'block';
-          qrArea.style.display  = 'none';
+    if (btn.classList.contains('qr')) {
+      if (!currentUser) {
+        alert("로그인 후에 QR을 사용할 수 있습니다.");
+        btn.classList.remove('qr');
+        return;
       }
+
+      const qrText = "https://creamy-tim.github.io/BizDeck/qr/card.html?id=" + encodeURIComponent(currentUser.uid);
+
+      card.style.display = 'none';
+      qr.style.display = 'block';
+      my_card.style.display = 'none';
+
+      qrArea.innerHTML = '';
+      qrArea.style.display = 'block';
+
+      new QRCode(qrArea, {
+        text: qrText,
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      qrArea.addEventListener("click", () => window.location.href = qrText);
+
+    } else {
+      card.style.display = 'block';
+      qr.style.display = 'none';
+      my_card.style.display = 'block';
+      qrArea.style.display = 'none';
+      qrArea.innerHTML = '';
+    }
   };
 </script>
 

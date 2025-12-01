@@ -1,293 +1,102 @@
-// Firebase SDK 모듈 가져오기
+// ================= Firebase SDK import =================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-// Firebase 설정 (새로 만든 config)
+// ================= Firebase 초기화 =================
 const firebaseConfig = {
-  apiKey: "AIzaSyChGzlnFvC5vFhqxqDyP-ZNFirvSxzI0Z0",
-  authDomain: "bizdeck-9fae5.firebaseapp.com",
-  projectId: "bizdeck-9fae5",
-  storageBucket: "bizdeck-9fae5.firebasestorage.app",
-  messagingSenderId: "947125248466",
-  appId: "1:947125248466:web:255f15e2555a7e43a5a80b",
-  measurementId: "G-RQ7KHXBP6J"
+    apiKey: "AIzaSyChGzlnFvC5vFhqxqDyP-ZNFirvSxzI0Z0",
+    authDomain: "bizdeck-9fae5.firebaseapp.com",
+    projectId: "bizdeck-9fae5",
+    storageBucket: "bizdeck-9fae5.firebasestorage.app",
+    messagingSenderId: "947125248466",
+    appId: "1:947125248466:web:255f15e2555a7e43a5a80b",
+    measurementId: "G-RQ7KHXBP6J"
 };
 
-// Firebase 앱 초기화
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// 👉 기본 명함 값 (HTML에도 이미 들어가 있지만, 참고용으로 보관)
+// ================= 기본값 =================
 const DEFAULT_CARD = {
-  name: "Name",
-  title: "Job",
-  contact: "010-0000-0000",
-  email: "Email",
-  website: "Website",
+    name: "Name",
+    title: "Job",
+    phone: "010-0000-0000",
+    email: "Email",
+    website: "Website",
 };
 
-// DOM 요소
+// ================= DOM 요소 =================
 const nameEl = document.querySelector(".my_name_text");
 const titleEl = document.querySelector(".my_job_text");
+const contactNodes = document.querySelectorAll(".contact_text_text");
+const contactEl = contactNodes[0];
+const emailEl = contactNodes[1];
+const websiteEl = contactNodes[2];
 
-const contactTextNodes = document.querySelectorAll(".contact_text_text");
-const contactEl = contactTextNodes[0];  // 전화
-const emailEl   = contactTextNodes[1];  // 이메일
-const websiteEl = contactTextNodes[2];  // 웹사이트
+const friendsWrapEl = document.getElementById("friends_cards");
 
-// 🔹 프로필 불러오기
+// ================= 내 명함 불러오기 =================
 async function loadProfile(uid) {
-  const ref = doc(db, "users", uid);
+    const ref = doc(db, "users", uid);
+    const snap = await getDoc(ref);
 
-  try {
-    const docSnap = await getDoc(ref);
+    if (!snap.exists()) return;
 
-    if (!docSnap.exists()) {
-      console.log("Firestore에 이 사용자의 문서가 없음. 기본 명함 유지");
-      return; // 아무것도 안 바꿈 → 기본 값 그대로
-    }
+    const data = snap.data();
 
-    const userData = docSnap.data();  // Firestore에서 가져온 사용자 데이터
-    console.log("불러온 데이터:", userData);
+    nameEl.textContent = data.nickname || DEFAULT_CARD.name;
+    titleEl.textContent = data.title || DEFAULT_CARD.title;
+    contactEl.textContent = data.phone || DEFAULT_CARD.phone;
+    emailEl.textContent = data.email || DEFAULT_CARD.email;
+    websiteEl.textContent = data.website || DEFAULT_CARD.website;
 
-    const { nickname, title, phone, email, website, isItalic, isBold, isUnderline, isUppercase, fontSize, card_color } = userData;
-
-    // 텍스트에 스타일 적용 (예: .text_item 클래스를 가진 요소들)
-    document.querySelectorAll('.text_item').forEach(textElement => {
-      if (isItalic) textElement.style.fontStyle = 'italic';
-      else textElement.style.fontStyle = 'normal';
-
-      if (isBold) textElement.style.fontWeight = 'bold';
-      else textElement.style.fontWeight = 'normal';
-
-      if (isUnderline) textElement.style.textDecoration = 'underline';
-      else textElement.style.textDecoration = 'none';
-
-      if (isUppercase) textElement.style.textTransform = 'uppercase';
-      else textElement.style.textTransform = 'none';
+    document.querySelectorAll('.my_card').forEach(card => {
+        if (data.card_color) card.style.background = data.card_color;
     });
-
-    const data = docSnap.data();
-    const font_size = data.fontSize || 0; // 저장된 폰트 크기 값 가져오기 (기본값: 0)
-
-    console.log("불러온 폰트 크기:", font_size);
-
-    // 폰트 크기 적용 함수
-    applyFontSize(font_size);
-
-    // 폰트 크기 적용
-    function applyFontSize(font_size) {
-      // 텍스트 요소를 선택
-      const textElements = document.querySelectorAll('.text_item');
-
-      // 각 텍스트 요소에 폰트 크기 적용
-      textElements.forEach(textElement => {
-        // 기존 폰트 크기를 가져오고, 폰트 크기를 계산하여 덧붙이기
-        const currentFontSize = window.getComputedStyle(textElement).fontSize;
-        const currentFontSizeValue = parseInt(currentFontSize); // 기존 폰트 크기 (px 단위)
-
-        // 폰트 크기 계산 (기존 값에 가져온 font_size를 더함)
-        const newFontSize = currentFontSizeValue + fontSize;
-
-        // 폰트 크기 업데이트
-        textElement.style.fontSize = `${newFontSize}px`;
-      });
-    }
-
-    // 프로필 로드 (색상 값 포함)
-    const card_background_color = data.card_color || "#FE5858";  // 저장된 색상 값 가져오기 (기본값: 분홍색)
-
-    console.log("불러온 색상 값:", card_background_color);
-
-    // 색상 값을 적용할 텍스트 요소 선택
-    document.querySelectorAll('.my_card').forEach(textElement => {
-      textElement.style.background = card_background_color;  // 저장된 색상 값 적용
-    });
-
-
-    // 이메일 말고 다른 값이 하나라도 있는지 체크
-    const hasOtherFields =
-      (nickname && nickname.trim() !== "") ||
-      (title && title.trim() !== "") ||
-      (phone && phone.trim() !== "") ||
-      (website && website.trim() !== "");
-
-    if (!hasOtherFields) {
-      console.log("이메일만 있어서 기본 명함 유지");
-      // 필요하면 이메일만 교체하고 싶으면 여기에서:
-      if (email) emailEl.textContent = email;
-      return;
-    }
-
-    // 🔸 여기까지 왔다면: 명함 정보가 어느 정도 채워져 있는 상태 → 화면에 반영
-    nameEl.textContent = nickname || DEFAULT_CARD.name;
-    titleEl.textContent = title || DEFAULT_CARD.title;
-    contactEl.textContent = phone || DEFAULT_CARD.contact;
-    emailEl.textContent = email || DEFAULT_CARD.email;
-    websiteEl.textContent = website || DEFAULT_CARD.website;
-
-  } catch (err) {
-    console.error("명함 불러오기 실패:", err.message);
-    alert("명함 불러오기 실패");
-  }
 }
 
+// ================= 친구 명함 불러오기 =================
+async function loadFriends(uid) {
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) return;
 
-// 🔹 명함 저장하기
-async function saveProfile() {
-  const user = auth.currentUser;
-  if (!user) {
-    alert("로그인 후 수정 가능합니다.");
-    return;
-  }
+    const friendUids = userSnap.data().friends || [];
 
-  const name = nameEl.textContent;
-  const title = titleEl.textContent;
-  const contact = contactEl.textContent;
-  const email = emailEl.textContent;
-  const website = websiteEl.textContent;
+    friendsWrapEl.innerHTML = "";
 
-  const ref = doc(db, "users", user.uid);
+    for (const f of friendUids) {
+        const ref = doc(db, "users", f);
+        const snap = await getDoc(ref);
 
-  console.log("Firestore에 저장할 데이터:", { name, title, contact, email, website });
+        if (!snap.exists()) continue;
 
-  try {
-    console.log("Firestore에 데이터 저장 중...");
-    await setDoc(
-      ref,
-      {
-        nickname: name,
-        title: title,
-        phone: contact,
-        email: email,
-        website: website,
-      },
-      { merge: true }
-    );
+        const data = snap.data();
+        const card = document.createElement("div");
+        card.className = "my_card";
 
-    console.log("명함이 저장되었습니다.");
+        if (data.card_color) card.style.background = data.card_color;
 
-  } catch (err) {
-    console.error("Firestore에 저장 실패:", err.message);
+        card.innerHTML = `
+            <div class="my_name"><p class="my_name_text">${data.nickname}</p></div>
+            <div class="my_job"><p class="my_job_text">${data.title}</p></div>
+            <div class="contact_case">
+                <div class="contact"><p class="contact_text_text">${data.phone}</p></div>
+                <div class="contact"><p class="contact_text_text">${data.email}</p></div>
+                <div class="contact"><p class="contact_text_text">${data.website}</p></div>
+            </div>
+        `;
 
-  }
+        friendsWrapEl.appendChild(card);
+    }
 }
 
-// 로그인 상태 바뀔 때 명함 자동 로드
+// ================= 로그인 감지 =================
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("명함 페이지 - 로그인 감지:", user.email);
+    if (!user) return;
+
     loadProfile(user.uid);
-  } else {
-    console.log("명함 페이지 - 로그인 안 됨, 기본 명함 사용");
-  }
-});
-
-// 저장 버튼 클릭 시
-const saveBtn = document.getElementById("save_button");
-
-if (saveBtn) {
-  saveBtn.addEventListener("click", saveProfile);
-}
-
-// 친구들의 명함을 동적으로 생성하는 함수
-async function loadFriendsProfile(userUid) {
-    try {
-        // 1. 현재 로그인된 유저의 친구 목록 가져오기
-        const userRef = doc(db, "users", userUid);
-        const userSnap = await getDoc(userRef);
-
-        if (!userSnap.exists()) {
-            console.log("사용자 데이터가 없습니다.");
-            return;
-        }
-
-        const userData = userSnap.data();
-        const friendUids = userData.friends || [];  // ✅ card.js에서 저장한 필드 이름과 맞추기
-
-        console.log("친구들의 UID 배열:", friendUids);
-
-        // 2. 친구들의 데이터를 가져와서 명함 생성
-        const cardsContainer = document.getElementById('friends_cards');
-        cardsContainer.innerHTML = "";  // 기존 명함 지우기
-
-        if (friendUids.length === 0) {
-            const emptyMsg = document.createElement("p");
-            emptyMsg.textContent = "등록된 친구 명함이 없습니다.";
-            emptyMsg.style.margin = "16px";
-            cardsContainer.appendChild(emptyMsg);
-            return;
-        }
-
-        for (const friendUid of friendUids) {
-            const friendRef = doc(db, "users", friendUid);
-            const friendSnap = await getDoc(friendRef);
-
-            if (friendSnap.exists()) {
-                const friendData = friendSnap.data();
-                createCard(friendUid, friendData);  // ✅ friendUid 같이 넘기기
-            } else {
-                console.log(`친구 데이터가 없음: ${friendUid}`);
-            }
-        }
-
-    } catch (err) {
-        console.error("친구 명함 불러오기 실패:", err.message);
-        alert("친구 명함 불러오기 실패");
-    }
-}
-
-function createCard(friendUid, friendData) {
-  const { nickname, name, title, phone, email, website, card_color } = friendData;
-  const displayName  = nickname || name || "Name";
-  const displayJob   = title    || "Job";
-  const displayPhone = phone    || "010-0000-0000";
-  const displayEmail = email    || "Email";
-  const displaySite  = website  || "Website";
-
-  const card = document.createElement('div');
-  card.classList.add('friends_cards');
-
-  card.innerHTML = `
-      <div class="my_name">
-      <p class="my_name_text">${displayName}</p>
-      </div>
-      <div class="my_job">
-      <p class="my_job_text">${displayJob}</p>
-      </div>
-      <div class="contact_case">
-      <div class="contact">
-          <div class="contact_text">
-          <p class="contact_text_text">${displayPhone}</p>
-          </div>
-      </div>
-      <div class="contact">
-          <div class="contact_text">
-          <p class="contact_text_text">${displayEmail}</p>
-          </div>
-      </div>
-      <div class="contact">
-          <div class="contact_text">
-          <p class="contact_text_text">${displaySite}</p>
-          </div>
-      </div>
-      </div>
-      <div class="logo">
-      <img src="./assets/img/BizDeck_logo.svg" class="logo_img">
-      </div>
-  `;
-}
-
-// 로그인 상태 감지 후 친구 명함 로드
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        console.log("로그인된 유저:", user.email);
-        // 로그인된 유저의 UID를 가져와서 친구 명함을 로드
-        loadFriendsProfile(user.uid);
-    } else {
-        console.log("로그인되지 않았습니다.");
-        alert("로그인 후 명함을 확인할 수 있습니다.");
-    }
+    loadFriends(user.uid);
 });
