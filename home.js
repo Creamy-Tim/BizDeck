@@ -248,7 +248,7 @@ function createCard(friendUid, friendData) {
   const displaySite  = website  || "Website";
 
   const card = document.createElement('div');
-  card.classList.add('my_card');
+  card.classList.add('friends_cards');
 
   card.innerHTML = `
       <div class="my_name">
