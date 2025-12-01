@@ -97,10 +97,10 @@ function createCard(friendUid, friendData) {
 
     card.innerHTML = `
         <div class="my_name">
-        <p class="my_name_text">${displayName}</p>
+            <p class="my_name_text">${displayName}</p>
         </div>
         <div class="my_job">
-        <p class="my_job_text">${displayJob}</p>
+            <p class="my_job_text">${displayJob}</p>
         </div>
         <div class="contact_case">
             <div class="contact">
